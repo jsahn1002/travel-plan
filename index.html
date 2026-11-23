@@ -3,1490 +3,1547 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>도쿄 5박 6일 모바일 여행 플래너</title>
+<title>도쿄 5박 6일 모바일 여행 플래너 v2</title>
 <style>
 :root {
-  --primary: #2563eb;
-  --primary-light: #eff6ff;
-  --secondary: #f43f5e;
-  --text-main: #111827;
-  --text-sub: #4b5563;
-  --text-muted: #6b7280;
-  --bg-body: #f1f5f9;
-  --bg-card: #ffffff;
-  --border: #e2e8f0;
-  --badge-red: #ef4444;
-  --badge-red-bg: #fef2f2;
-  --badge-blue: #3b82f6;
-  --badge-blue-bg: #eff6ff;
-  --badge-amber: #d97706;
-  --badge-amber-bg: #fffbeb;
-  --badge-pink: #ec4899;
-  --badge-pink-bg: #fdf2f8;
-  --badge-green: #059669;
-  --badge-green-bg: #ecfdf5;
+ --primary: #2563eb;
+ --primary-light: #eff6ff;
+ --secondary: #f43f5e;
+ --text-main: #111827;
+ --text-sub: #4b5563;
+ --text-muted: #6b7280;
+ --bg-body: #f1f5f9;
+ --bg-card: #ffffff;
+ --border: #e2e8f0;
+ --badge-red: #ef4444;
+ --badge-red-bg: #fef2f2;
+ --badge-blue: #3b82f6;
+ --badge-blue-bg: #eff6ff;
+ --badge-amber: #d97706;
+ --badge-amber-bg: #fffbeb;
+ --badge-pink: #ec4899;
+ --badge-pink-bg: #fdf2f8;
+ --badge-green: #059669;
+ --badge-green-bg: #ecfdf5;
+ --badge-purple: #7c3aed;
+ --badge-purple-bg: #f5f3ff;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+ -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-body);
-  color: var(--text-main);
-  line-height: 1.5;
+ font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
+ background-color: var(--bg-body);
+ color: var(--text-main);
+ line-height: 1.55;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* 앱 컨테이너 */
 .app-wrapper {
-  max-width: 560px;
-  margin: 0 auto;
-  min-height: 100vh;
-  background-color: #f8fafc;
-  box-shadow: 0 0 25px rgba(0,0,0,0.06);
-  position: relative;
-  padding-bottom: 40px;
+ max-width: 560px;
+ margin: 0 auto;
+ min-height: 100vh;
+ background-color: #f8fafc;
+ box-shadow: 0 0 25px rgba(0,0,0,0.06);
+ position: relative;
+ padding-bottom: 50px;
 }
 
 /* 상단 고정 네비게이션 바 */
 .top-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+ position: sticky;
+ top: 0;
+ z-index: 100;
+ background: rgba(255, 255, 255, 0.94);
+ backdrop-filter: blur(10px);
+ border-bottom: 1px solid var(--border);
+ padding: 13px 16px;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
 }
 
 .nav-title {
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--text-main);
-  letter-spacing: -0.3px;
+ font-size: 16.5px;
+ font-weight: 800;
+ color: var(--text-main);
+ letter-spacing: -0.3px;
 }
 
 .back-btn {
-  display: none; /* JS에서 제어 */
-  align-items: center;
-  gap: 6px;
-  background: var(--primary-light);
-  color: var(--primary);
-  border: none;
-  padding: 7px 13px;
-  border-radius: 20px;
-  font-size: 13.5px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 0.1s ease;
+ display: none;
+ align-items: center;
+ gap: 5px;
+ background: var(--primary-light);
+ color: var(--primary);
+ border: none;
+ padding: 7px 13px;
+ border-radius: 20px;
+ font-size: 13px;
+ font-weight: 700;
+ cursor: pointer;
 }
 
 .back-btn:active {
-  transform: scale(0.96);
+ transform: scale(0.96);
+}
+
+/* 상단 메인 탭 전환 바 (홈 화면 전용) */
+.main-tabs {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ background: #e2e8f0;
+ padding: 4px;
+ border-radius: 14px;
+ margin: 14px 16px 4px;
+}
+
+.tab-btn {
+ border: none;
+ background: transparent;
+ padding: 10px 8px;
+ border-radius: 11px;
+ font-size: 14px;
+ font-weight: 800;
+ color: var(--text-sub);
+ cursor: pointer;
+ transition: all 0.18s ease;
+}
+
+.tab-btn.active {
+ background: #ffffff;
+ color: var(--primary);
+ box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 /* 화면 전환 뷰 제어 */
 .view-section {
-  display: none;
-  padding: 18px 16px;
-  animation: fadeIn 0.22s ease-out;
+ display: none;
+ padding: 14px 16px;
+ animation: fadeIn 0.2s ease-out;
 }
 
 .view-section.active {
-  display: block;
+ display: block;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+ from { opacity: 0; transform: translateY(5px); }
+ to { opacity: 1; transform: translateY(0); }
 }
 
 /* 홈 화면 헤더 배너 */
 .hero-banner {
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-  color: #ffffff;
-  border-radius: 18px;
-  padding: 22px 20px;
-  margin-bottom: 22px;
-  box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.35);
+ background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+ color: #ffffff;
+ border-radius: 18px;
+ padding: 20px;
+ margin-bottom: 18px;
+ box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.32);
 }
 
 .hero-tag {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 8px;
+ display: inline-block;
+ background: rgba(255, 255, 255, 0.2);
+ padding: 3px 10px;
+ border-radius: 12px;
+ font-size: 11.5px;
+ font-weight: 600;
+ margin-bottom: 7px;
 }
 
 .hero-banner h1 {
-  font-size: 22px;
-  font-weight: 800;
-  margin-bottom: 4px;
+ font-size: 20px;
+ font-weight: 800;
+ margin-bottom: 4px;
 }
 
 .hero-banner p {
-  font-size: 13.5px;
-  opacity: 0.9;
+ font-size: 13px;
+ opacity: 0.92;
 }
 
 /* 섹션 타이틀 */
 .section-label {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--text-main);
-  margin: 24px 0 12px 2px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+ font-size: 15px;
+ font-weight: 800;
+ color: var(--text-main);
+ margin: 20px 0 11px 2px;
+ display: flex;
+ align-items: center;
+ gap: 6px;
 }
 
-/* 요약 그리드 */
-.summary-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+/* ==================== 금액/결제 탭 스타일 ==================== */
+.budget-total-card {
+ background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+ color: #ffffff;
+ border-radius: 18px;
+ padding: 22px 20px;
+ margin-bottom: 18px;
+ box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.25);
 }
 
-.summary-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 13px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+.budget-total-card .b-label {
+ font-size: 12.5px;
+ color: #94a3b8;
+ font-weight: 600;
+ display: block;
+ margin-bottom: 4px;
 }
 
-.summary-box.full {
-  grid-column: span 2;
+.budget-total-card .b-amount {
+ font-size: 28px;
+ font-weight: 900;
+ letter-spacing: -0.5px;
+ color: #38bdf8;
 }
 
-.summary-box .s-title {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--text-sub);
-  margin-bottom: 4px;
-  display: block;
+.budget-total-card .b-per-person {
+ margin-top: 8px;
+ padding-top: 10px;
+ border-top: 1px solid rgba(255,255,255,0.12);
+ font-size: 13px;
+ color: #e2e8f0;
+ display: flex;
+ justify-content: space-between;
 }
 
-.summary-box .s-content {
-  font-size: 13px;
-  color: var(--text-main);
-  font-weight: 600;
+.cost-group-card {
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 16px;
+ padding: 16px;
+ margin-bottom: 12px;
+ box-shadow: 0 2px 5px rgba(0,0,0,0.02);
 }
 
-.summary-box .s-sub {
-  font-size: 11.5px;
-  color: var(--text-muted);
-  margin-top: 2px;
-  display: block;
+.cost-group-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding-bottom: 10px;
+ margin-bottom: 12px;
+ border-bottom: 1px solid #f1f5f9;
 }
 
-.highlight {
-  color: var(--primary);
-  font-weight: 800;
+.cost-group-title {
+ font-size: 15px;
+ font-weight: 800;
+ display: flex;
+ align-items: center;
+ gap: 6px;
 }
 
-/* 메뉴 카드 리스트 */
+.cost-group-subtotal {
+ font-size: 15px;
+ font-weight: 800;
+ color: var(--primary);
+}
+
+.cost-item {
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-start;
+ padding: 8px 0;
+ border-bottom: 1px dashed #f1f5f9;
+}
+
+.cost-item:last-child {
+ border-bottom: none;
+ padding-bottom: 0;
+}
+
+.cost-item-info strong {
+ font-size: 13.5px;
+ color: var(--text-main);
+ display: block;
+}
+
+.cost-item-info span {
+ font-size: 12px;
+ color: var(--text-muted);
+ display: block;
+ margin-top: 2px;
+}
+
+.cost-item-price {
+ font-size: 14px;
+ font-weight: 800;
+ color: var(--text-main);
+ white-space: nowrap;
+ margin-left: 10px;
+}
+
+/* 현지 예상 지출 계산기 */
+.local-budget-box {
+ background: #ffffff;
+ border: 1px solid var(--border);
+ border-radius: 16px;
+ padding: 16px;
+ margin-top: 12px;
+}
+
+.local-row {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 7px 0;
+ font-size: 13.5px;
+ border-bottom: 1px solid #f1f5f9;
+}
+
+.local-row:last-child {
+ border-bottom: none;
+}
+
+.local-row span:first-child {
+ color: var(--text-sub);
+ font-weight: 600;
+}
+
+.local-row span:last-child {
+ font-weight: 800;
+ color: var(--text-main);
+}
+
+/* ==================== 메뉴 카드 리스트 ==================== */
 .menu-list {
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
 }
 
 .nav-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 16px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 16px;
+ padding: 15px 16px;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ cursor: pointer;
+ transition: all 0.15s ease;
+ box-shadow: 0 2px 5px rgba(0,0,0,0.03);
 }
 
 .nav-card:active {
-  transform: scale(0.985);
-  background-color: #f8fafc;
+ transform: scale(0.985);
+ background-color: #f8fafc;
 }
 
 .nav-card-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+ display: flex;
+ align-items: center;
+ gap: 13px;
 }
 
 .day-badge {
-  min-width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: var(--primary-light);
-  color: var(--primary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 13px;
-  line-height: 1.15;
+ min-width: 50px;
+ height: 50px;
+ border-radius: 14px;
+ background: var(--primary-light);
+ color: var(--primary);
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ font-weight: 800;
+ font-size: 13px;
+ line-height: 1.15;
 }
 
 .day-badge span {
-  font-size: 10px;
-  font-weight: 600;
-  opacity: 0.8;
+ font-size: 10px;
+ font-weight: 600;
+ opacity: 0.85;
 }
 
 .cat-badge {
-  min-width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
+ min-width: 50px;
+ height: 50px;
+ border-radius: 14px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 22px;
 }
 
 .nav-card-info h3 {
-  font-size: 15.5px;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 3px;
+ font-size: 15px;
+ font-weight: 800;
+ color: var(--text-main);
+ margin-bottom: 3px;
 }
 
 .nav-card-info p {
-  font-size: 13px;
-  color: var(--text-sub);
-  word-break: keep-all;
+ font-size: 12.5px;
+ color: var(--text-sub);
+ word-break: keep-all;
 }
 
 .chevron {
-  color: #94a3b8;
-  font-size: 18px;
-  font-weight: 700;
-  margin-left: 8px;
+ color: #94a3b8;
+ font-size: 18px;
+ font-weight: 700;
+ margin-left: 8px;
 }
 
 /* 서브 페이지 상단 타이틀 */
 .detail-header {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
-  margin-bottom: 20px;
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 16px;
+ padding: 17px;
+ margin-bottom: 18px;
 }
 
 .detail-header .d-date {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 4px;
-  display: block;
+ font-size: 12px;
+ font-weight: 700;
+ color: var(--primary);
+ margin-bottom: 4px;
+ display: block;
 }
 
 .detail-header h2 {
-  font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 6px;
+ font-size: 19px;
+ font-weight: 800;
+ margin-bottom: 5px;
 }
 
 .detail-header p {
-  font-size: 13.5px;
-  color: var(--text-sub);
+ font-size: 13px;
+ color: var(--text-sub);
 }
 
 /* 타임라인 일정 카드 */
 .timeline-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 28px;
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ margin-bottom: 24px;
 }
 
 .timeline-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--primary);
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-left: 4px solid var(--primary);
+ border-radius: 14px;
+ padding: 15px;
+ box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.timeline-card.highlight-pink {
+ border-left-color: var(--badge-pink);
+}
+
+.timeline-card.highlight-amber {
+ border-left-color: var(--badge-amber);
+}
+
+.timeline-card.highlight-purple {
+ border-left-color: var(--badge-purple);
 }
 
 .tl-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 8px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ gap: 8px;
+ margin-bottom: 8px;
+ flex-wrap: wrap;
 }
 
 .tl-time {
-  font-size: 12.5px;
-  font-weight: 800;
-  color: var(--primary);
-  background: var(--primary-light);
-  padding: 3px 9px;
-  border-radius: 6px;
+ font-size: 12px;
+ font-weight: 800;
+ color: var(--primary);
+ background: var(--primary-light);
+ padding: 3px 9px;
+ border-radius: 6px;
 }
 
 .tl-route {
-  font-size: 15.5px;
-  font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 6px;
+ font-size: 15.5px;
+ font-weight: 800;
+ color: var(--text-main);
+ margin-bottom: 6px;
 }
 
 .tl-desc {
-  font-size: 13.5px;
-  color: var(--text-sub);
-  margin-bottom: 10px;
+ font-size: 13.5px;
+ color: var(--text-sub);
+ margin-bottom: 10px;
 }
 
 .tl-note {
-  background: #f8fafc;
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 12.5px;
-  color: #334155;
-  border: 1px dashed #cbd5e1;
+ background: #f8fafc;
+ border-radius: 10px;
+ padding: 11px 12px;
+ font-size: 12.5px;
+ color: #334155;
+ border: 1px dashed #cbd5e1;
+ line-height: 1.6;
+}
+
+.tl-note strong {
+ color: #0f172a;
 }
 
 /* 스팟 & 맛집 정보 카드 */
 .info-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+ display: flex;
+ flex-direction: column;
+ gap: 11px;
 }
 
 .info-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 14px;
+ padding: 15px;
+ box-shadow: 0 2px 5px rgba(0,0,0,0.02);
 }
 
 .info-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #f1f5f9;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ gap: 8px;
+ margin-bottom: 9px;
+ padding-bottom: 8px;
+ border-bottom: 1px solid #f1f5f9;
 }
 
 .info-card-title {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--text-main);
+ font-size: 14.5px;
+ font-weight: 800;
+ color: var(--text-main);
 }
 
 .info-card-body {
-  font-size: 13.5px;
-  color: var(--text-sub);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+ font-size: 13px;
+ color: var(--text-sub);
+ display: flex;
+ flex-direction: column;
+ gap: 6px;
 }
 
 .info-card-body strong {
-  color: var(--text-main);
+ color: var(--text-main);
 }
 
 /* 뱃지 스타일 */
 .badge {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 6px;
-  font-size: 11.5px;
-  font-weight: 700;
-  white-space: nowrap;
+ display: inline-block;
+ padding: 3px 8px;
+ border-radius: 6px;
+ font-size: 11px;
+ font-weight: 700;
+ white-space: nowrap;
 }
 .badge-red { color: var(--badge-red); background: var(--badge-red-bg); border: 1px solid #fecaca; }
 .badge-blue { color: var(--badge-blue); background: var(--badge-blue-bg); border: 1px solid #bfdbfe; }
 .badge-amber { color: var(--badge-amber); background: var(--badge-amber-bg); border: 1px solid #fde68a; }
 .badge-pink { color: var(--badge-pink); background: var(--badge-pink-bg); border: 1px solid #fbcfe8; }
 .badge-green { color: var(--badge-green); background: var(--badge-green-bg); border: 1px solid #a7f3d0; }
+.badge-purple { color: var(--badge-purple); background: var(--badge-purple-bg); border: 1px solid #ddd6fe; }
 
 /* 하단 홈 복귀 버튼 */
 .bottom-home-btn {
-  display: block;
-  text-align: center;
-  width: 100%;
-  margin-top: 24px;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  color: var(--text-main);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
+ width: 100%;
+ margin-top: 22px;
+ padding: 14px;
+ border-radius: 14px;
+ border: 1px solid var(--border);
+ background: var(--bg-card);
+ color: var(--text-main);
+ font-size: 14px;
+ font-weight: 700;
+ cursor: pointer;
 }
 
 footer {
-  text-align: center;
-  font-size: 12px;
-  color: #94a3b8;
-  margin-top: 32px;
-  padding: 0 16px;
+ text-align: center;
+ font-size: 12px;
+ color: #94a3b8;
+ margin-top: 28px;
+ padding: 0 16px;
 }
 </style>
 </head>
 <body>
 
 <div class="app-wrapper">
-  <!-- 상단 고정 바 -->
-  <nav class="top-nav">
-    <div class="nav-title" id="navTitle">🇯🇵 도쿄 5박 6일 플래너</div>
-    <!-- 자바스크립트 우회를 위해 a 태그 사용 -->
-    <a href="#home" class="back-btn" id="backBtn">← 전체 메뉴</a>
-  </nav>
-
-  <!-- ==================== [홈 화면] 요약 및 메뉴 리스트 ==================== -->
-  <main id="view-home" class="view-section active">
-    <div class="hero-banner">
-      <span class="hero-tag">2026. 11. 29 (일) ~ 12. 04 (금)</span>
-      <h1>도쿄 5박 6일 여행 가이드</h1>
-      <p>원하는 일자나 카테고리를 눌러 상세 카드를 확인하세요.</p>
-    </div>
-
-    <div class="section-label">📌 예약 및 핵심 요약</div>
-    <div class="summary-grid">
-      <div class="summary-box">
-        <span class="s-title">✈️ 항공권 (2인)</span>
-        <div class="s-content"><span class="highlight">₩701,030</span></div>
-        <span class="s-sub">출국 11/29 08:40~10:55<br>귀국 12/04 20:00~22:40</span>
-      </div>
-      <div class="summary-box">
-        <span class="s-title">🎟️ 치이카와 파크</span>
-        <div class="s-content"><span class="highlight">12/03(목) 11:00</span></div>
-        <span class="s-sub">선샤인시티 아넥스 (예약완료)<br>클룩 2인 ₩58,000</span>
-      </div>
-      <div class="summary-box full">
-        <span class="s-title">🏨 숙소 1 (4박) : 이케부쿠로 에어비앤비</span>
-        <div class="s-content">11/29(일) ~ 12/03(목) | <span class="highlight">₩279,587</span></div>
-        <span class="s-sub">체크인 16:00~ / 체크아웃 10:00 (35°44'18.6"N 139°42'47.7"E)</span>
-      </div>
-      <div class="summary-box full">
-        <span class="s-title">🏨 숙소 2 (1박) : 도미인 익스프레스 아사쿠사</span>
-        <div class="s-content">12/03(목) ~ 12/04(금) | <span class="highlight">₩134,221</span></div>
-        <span class="s-sub">리버 사이드뷰 · 온천 대욕장 | 체크인 15:00~ / 체크아웃 11:00</span>
-      </div>
-    </div>
-
-    <div class="section-label">🗓️ 일자별 일정 및 추천 가이드</div>
-    <div class="menu-list">
-      <!-- div를 순수 a 링크 태그로 교체 (보안 완벽 우회) -->
-      <a href="#day1" class="nav-card">
-        <div class="nav-card-left">
-          <div class="day-badge">DAY 1<span>11/29(일)</span></div>
-          <div class="nav-card-info">
-            <h3>신주쿠 · 하라주쿠 · 시부야</h3>
-            <p>신주쿠교엔 단풍과 하라주쿠 굿즈 투어, 시부야 스카이 야경</p>
-          </div>
-        </div>
-        <div class="chevron">›</div>
-      </a>
-
-      <a href="#day2" class="nav-card">
-        <div class="nav-card-left">
-          <div class="day-badge">DAY 2<span>11/30(월)</span></div>
-          <div class="nav-card-info">
-            <h3>가와고에 · 이케부쿠로</h3>
-            <p>작은 에도 가와고에 전통거리 산책과 이케부쿠로 샵 집중 투어</p>
-          </div>
-        </div>
-        <div class="chevron">›</div>
-      </a>
-
-      <a href="#day3" class="nav-card">
-        <div class="nav-card-left">
-          <div class="day-badge">DAY 3<span>12/01(화)</span></div>
-          <div class="nav-card-info">
-            <h3>도쿄 디즈니랜드</h3>
-            <p>종일 어트랙션과 크리스마스 시즌 퍼레이드 & 불꽃놀이</p>
-          </div>
-        </div>
-        <div class="chevron">›</div>
-      </a>
-
-      <a href="#day4" class="nav-card">
-        <div class="nav-card-left">
-          <div class="day-badge">DAY 4<span>12/02(수)</span></div>
-          <div class="nav-card-info">
-            <h3>도쿄역 · 롯폰기 · 도쿄타워</h3>
-            <p>캐릭터 스트리트 쇼핑과 케야키자카·도쿄타워 일루미네이션</p>
-          </div>
-        </div>
-        <div class="chevron">›</div>
-      </a>
-
-      <a href="#day5" class="nav-card">
-        <div class="nav-card-left">
-          <div class="day-badge">DAY 5<span>12/03(목)</span></div>
-          <div class="nav-card-info">
-            <h3>치이카와 파크 · 아사쿠사</h3>
-            <p>오전 11시 치이카와 파크 관람 후 도미인 온천 & 센소지 야경</p>
-          </div>
-        </div>
-        <div class="chevron">›</div>
-      </a>
-
-      <a href="#day6" class="nav-card">
-        <div class="nav-card-left">
-          <div class="day-badge">DAY 6<span>12/04(금)</span></div>
-          <div class="nav-card-info">
-            <h3>아사쿠사 골목 · 갓파바시 (귀국)</h3>
-            <p>나카미세 간식 투어와 갓파바시 그릇·소품 쇼핑 후 공항 이동</p>
-          </div>
-        </div>
-        <div class="chevron">›</div>
-      </a>
-    </div>
-
-    <div class="section-label">✨ 테마별 스페셜 카테고리</div>
-    <div class="menu-list">
-      <a href="#chiikawa" class="nav-card">
-        <div class="nav-card-left">
-          <div class="cat-badge" style="background:#fdf2f8;">🐹</div>
-          <div class="nav-card-info">
-            <h3>치이카와 공식 명소 총정리</h3>
-            <p>파크, 레스토랑, 라멘 부타, 모구모구 혼포 등 6대 스팟</p>
-          </div>
-        </div>
-        <div class="chevron">›</div>
-      </a>
-
-      <a href="#illumination" class="nav-card">
-        <div class="nav-card-left">
-          <div class="cat-badge" style="background:#eff6ff;">🎄</div>
-          <div class="nav-card-info">
-            <h3>2026 겨울 일루미네이션 10선</h3>
-            <p>마루노우치 해리포터, 롯폰기 케야키자카, 크리스마스 마켓</p>
-          </div>
-        </div>
-        <div class="chevron">›</div>
-      </a>
-    </div>
-  </main>
-
-  <!-- ==================== [1일차 상세 화면] ==================== -->
-  <section id="view-day1" class="view-section">
-    <div class="detail-header">
-      <span class="d-date">DAY 1 • 11/29 (일)</span>
-      <h2>신주쿠 · 하라주쿠 · 시부야</h2>
-      <p>신주쿠교엔 단풍 산책과 하라주쿠 치이카와 투어, 시부야 스카이 야경</p>
-    </div>
-
-    <div class="section-label">🕒 시간별 동선</div>
-    <div class="timeline-list">
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">10:55 ~ 13:30</span>
-        </div>
-        <div class="tl-route">도쿄 도착 → 이케부쿠로</div>
-        <div class="tl-desc">입국 수속 후 이케부쿠로 숙소 이동 및 짐 보관, 가벼운 점심</div>
-        <div class="tl-note">• 스카이라이너 / N'EX 이용<br>• 에어비앤비 사전 짐 보관 또는 역 코인로커</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">14:00 ~ 16:00</span>
-          <span class="badge badge-red">입장 마감 주의</span>
-        </div>
-        <div class="tl-route">이케부쿠로 → 신주쿠</div>
-        <div class="tl-desc">신주쿠 교엔 늦가을 단풍 산책 후 신주쿠 역세권 쇼핑</div>
-        <div class="tl-note">• 신주쿠교엔 동절기: <strong>16:00 입장마감 / 16:30 폐원</strong><br>• 교통카드(Suica/Pasmo) 태그 입장</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">16:15 ~ 18:30</span>
-          <span class="badge badge-pink">치이카와 투어</span>
-        </div>
-        <div class="tl-route">하라주쿠 (오모테산도)</div>
-        <div class="tl-desc">키디랜드(치이카와 랜드 하라주쿠점) & 치이카와 베이커리 굿즈 구경, 오모테산도 거리 산책</div>
-        <div class="tl-note">• 키디랜드 하라주쿠점 내 치이카와랜드<br>• 도큐플라자 오모카도 3F 치이카와 베이커리</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">18:45 ~ 22:00</span>
-          <span class="badge badge-red">사전예약 필수</span>
-        </div>
-        <div class="tl-route">시부야 → 이케부쿠로</div>
-        <div class="tl-desc">시부야 파르코(라멘 부타 / 굿즈) & 시부야 스카이 야경 관람 후 숙소 복귀</div>
-        <div class="tl-note">• 시부야 스카이 19시대 티켓 (방문 4주 전 00:00 오픈)<br>• 시부야 파르코 B1F '치이카와 라멘 부타' (정리권 확인)</div>
-      </div>
-    </div>
-
-    <div class="section-label">🌟 1일차 추천 스팟 & 맛집</div>
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">신주쿠 교엔 & 거리 산책</span>
-          <span class="badge badge-green">주요 스팟</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>신주쿠 교엔:</strong> 도심 속 거대한 영국/프랑스/일본 정원. 늦가을 단풍과 정취가 일품. (16:00 입장 마감 주의)</div>
-          <div><strong>이세탄 백화점 신주쿠 본점:</strong> 일본 최고 수준의 백화점 지하 푸드홀(데파치카)과 패션 매장.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">하라주쿠 & 캣스트리트</span>
-          <span class="badge badge-green">주요 스팟</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>키디랜드 하라주쿠:</strong> 캐릭터 굿즈의 성지. 치이카와 랜드 하라주쿠점 입점.</div>
-          <div><strong>캣스트리트 (우라하라):</strong> 감각적인 로컬 브랜드, 편집숍, 빈티지 숍이 이어지는 한적하고 힙한 보행자 전용 골목.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">시부야 스카이 & 파르코</span>
-          <span class="badge badge-green">주요 스팟</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>시부야 스카이:</strong> 229m 루프탑에서 스크램블 교차로와 도쿄 타워를 조망하는 360도 개방형 전망대.</div>
-          <div><strong>시부야 PARCO:</strong> B1F 카오스 키친(치이카와 라멘 부타 등) 및 6F 닌텐도·포켓몬 센터.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">우동 신 (うどん 慎)</span>
-          <span class="badge badge-amber">신주쿠 미식</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>구글 평점 4.3★ / 타베로그 3.7★</strong></div>
-          <div><strong>메뉴:</strong> 쫄깃한 자타공인 수타 우동, 자루우동 + 튀김 세트, 명란 버터 우동.</div>
-          <div><strong>팁:</strong> 신주쿠 최고의 인기점으로 매장 앞 키오스크 현장 정리권(QR) 사전 발권 필수.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">카츠미도리 세이부 시부야점</span>
-          <span class="badge badge-amber">시부야 미식</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>구글 평점 4.4★ / 타베로그 3.5★</strong></div>
-          <div><strong>메뉴:</strong> 도쿄 최고 가성비 프리미엄 회전초밥(미도리스시 계열). 신선한 참치 3종, 단새우, 우니.</div>
-          <div><strong>위치:</strong> 세이부 백화점 시부야점 A관 8층 (태블릿 한국어 주문 지원).</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">가렛 팝콘 & 오모테산도 디저트</span>
-          <span class="badge badge-pink">디저트 추천</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>가렛 팝콘 하라주쿠점:</strong> 시카고 믹스(치즈+카라멜)로 유명한 줄 서는 수제 팝콘.</div>
-          <div><strong>넘버슈가(Number Sugar) 오모테산도:</strong> 번호별 맛이 다른 고급 수제 카라멜 전문점 (기념품 선물용 인기).</div>
-          <div><strong>시부야 I'm donut?:</strong> 극강의 폭신함을 자랑하는 생도넛 웨이팅 명소.</div>
-        </div>
-      </div>
-    </div>
-    <a href="#home" class="bottom-home-btn">🏠 첫 화면으로 돌아가기</a>
-  </section>
-
-  <!-- ==================== [2일차 상세 화면] ==================== -->
-  <section id="view-day2" class="view-section">
-    <div class="detail-header">
-      <span class="d-date">DAY 2 • 11/30 (월)</span>
-      <h2>가와고에 · 이케부쿠로</h2>
-      <p>구라즈쿠리 전통거리와 고구마 간식, 이케부쿠로 치이카와 샵 투어</p>
-    </div>
-
-    <div class="section-label">🕒 시간별 동선</div>
-    <div class="timeline-list">
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">09:30 ~ 16:30</span>
-          <span class="badge badge-amber">조기 마감 주의</span>
-        </div>
-        <div class="tl-route">이케부쿠로 → 가와고에</div>
-        <div class="tl-desc">구라즈쿠리 전통거리, 고구마 간식 거리, 과자골목, '치이카와 모구모구 혼포' 가와고에점 방문</div>
-        <div class="tl-note">• 도부 도조선 급행(약 30분)<br>• 전통거리 상점 및 모구모구 혼포: <strong>17:00 전후 마감</strong></div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">17:00 ~ 21:00</span>
-          <span class="badge badge-pink">이케부쿠로 샵 투어</span>
-        </div>
-        <div class="tl-route">가와고에 → 이케부쿠로</div>
-        <div class="tl-desc"><strong>이케부쿠로 복귀 후 저녁 식사</strong> 및 이케부쿠로 치이카와 샵 집중 투어</div>
-        <div class="tl-note">• <strong>이케부쿠로 PARCO 본관 7F</strong>: 치이카와 레스토랑 & 기프트숍 (~21:00)<br>• 선샤인시티 & 애니메이트 본점 치이카와 굿즈 코너</div>
-      </div>
-    </div>
-
-    <div class="section-label">🏮 2일차 추천 스팟 & 맛집</div>
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">구라즈쿠리 & 도키노카네</span>
-          <span class="badge badge-green">가와고에 스팟</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>구라즈쿠리 거리:</strong> 검은 회반죽 흙벽 창고 가옥이 보존된 '작은 에도(코에도)' 전통 보존 거리.</div>
-          <div><strong>도키노카네(시간의 종):</strong> 가와고에의 상징적인 목조 3층 종루 (하루 4번 타종).</div>
-          <div><strong>카시야 요코초:</strong> 막대사탕, 센베이, 옛날 전통 과자를 파는 복고풍 골목길.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">이케부쿠로 파르코 & 선샤인시티</span>
-          <span class="badge badge-green">이케부쿠로 스팟</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>이케부쿠로 PARCO:</strong> 7F 치이카와 레스토랑 & 기프트샵, 트렌디 패션 및 캐릭터 굿즈.</div>
-          <div><strong>선샤인시티:</strong> 대형 복합 쇼핑몰, 포켓몬센터 메가도쿄, 가차폰 백화점.</div>
-          <div><strong>애니메이트 이케부쿠로 본점:</strong> 세계 최대 규모의 서브컬처 플래그십 스토어.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">오가기쿠 (小川菊)</span>
-          <span class="badge badge-amber">가와고에 장어덮밥</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>타베로그 3.75★ (백명점) / 구글 평점 4.3★</strong></div>
-          <div><strong>소개:</strong> 1807년 창업해 200년 넘는 역사를 지닌 에도식 숯불 장어덮밥(우나쥬) 최고 노포.</div>
-          <div><strong>팁:</strong> 가와고에 도착 직후 매장 번호표 발권 후 거리 구경 권장 (재료 소진 시 조기 마감).</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">가와고에 고구마 간식 투어</span>
-          <span class="badge badge-pink">가와고에 디저트</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>코에도 오사츠안:</strong> 바삭한 리본 모양의 거대 고구마 칩(오사츠 칩)과 딥소스.</div>
-          <div><strong>카쇼 우몬(菓匠右門):</strong> 따뜻하고 쫄깃한 고구마 찹쌀 만주 '이모코이(いも恋)'.</div>
-          <div><strong>스타벅스 가와고에 카네츠키도리점:</strong> 전통 목조 가옥과 일본식 정원을 품은 콘셉트 매장.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">무테키야 (無敵家)</span>
-          <span class="badge badge-amber">이케부쿠로 석식</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>구글 평점 4.4★ (리뷰 7,000개 이상)</strong></div>
-          <div><strong>메뉴:</strong> 진한 돈코츠 육수와 두툼하게 구워낸 차슈가 압권인 이케부쿠로 1등 라멘.</div>
-          <div><strong>위치:</strong> 이케부쿠로역 동쪽 출구 도보 3분 (저녁 웨이팅 감안 방문).</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">톤톤 (とんとん) & 디저트</span>
-          <span class="badge badge-pink">이케부쿠로 미식/후식</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>돈카츠 다이키 / 토마치:</strong> 두툼하고 육즙 가득한 이케부쿠로 로컬 돈카츠 명점.</div>
-          <div><strong>링고(RINGO) 이케부쿠로점:</strong> 갓 구워낸 바삭한 버터 페이스트리와 커스터드 애플파이 맛집.</div>
-        </div>
-      </div>
-    </div>
-    <a href="#home" class="bottom-home-btn">🏠 첫 화면으로 돌아가기</a>
-  </section>
-
-  <!-- ==================== [3일차 상세 화면] ==================== -->
-  <section id="view-day3" class="view-section">
-    <div class="detail-header">
-      <span class="d-date">DAY 3 • 12/01 (화)</span>
-      <h2>도쿄 디즈니랜드</h2>
-      <p>종일 어트랙션, 크리스마스 퍼레이드, 야간 불꽃놀이</p>
-    </div>
-
-    <div class="section-label">🕒 시간별 동선</div>
-    <div class="timeline-list">
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">08:30 ~ 21:00</span>
-          <span class="badge badge-red">E-티켓 사전구매</span>
-        </div>
-        <div class="tl-route">도쿄 디즈니랜드 종일 일정</div>
-        <div class="tl-desc">디즈니랜드 종일 어트랙션, 크리스마스 퍼레이드, 야간 불꽃놀이</div>
-        <div class="tl-note">• 현장 매표 불가, 날짜 지정권 지참<br>• 입장 직후 공식 앱으로 DPA(유료 패스) 선점</div>
-      </div>
-    </div>
-
-    <div class="section-label">🏰 3일차 추천 스팟 & 파크 미식</div>
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">핵심 어트랙션 3선</span>
-          <span class="badge badge-green">파크 필수 탑승</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>미녀와 야수 '마법의 이야기':</strong> 압도적 몰입감의 최신 다크라이드 (DPA 우선 추천).</div>
-          <div><strong>빅 썬더 마운틴 / 스페이스 마운틴:</strong> 디즈니랜드 클래식 인기 롤러코스터.</div>
-          <div><strong>베이맥스의 해피 라이드:</strong> 신나는 음악과 함께 회전하는 힐링 어트랙션.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">크리스마스 퍼레이드 & 야경</span>
-          <span class="badge badge-blue">시즌 하이라이트</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>디즈니 크리스마스 스토리:</strong> 겨울 시즌 한정 낮 퍼레이드 (산타 복장의 캐릭터 총출동).</div>
-          <div><strong>일렉트리컬 퍼레이드 드림라이츠:</strong> 백만 개 전구로 빛나는 야간 퍼레이드.</div>
-          <div><strong>신데렐라 성 라이트업 & 불꽃놀이:</strong> 파크 중앙의 웅장한 크리스마스 야경 연출.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">퀸 오브 하트 연회 홀</span>
-          <span class="badge badge-amber">파크 추천 식사</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>구글 평점 4.2★ (판타지랜드 내)</strong></div>
-          <div><strong>소개:</strong> '이상한 나라의 앨리스' 하트 여왕의 성을 재현한 테마 레스토랑.</div>
-          <div><strong>메뉴:</strong> 하트 모양 함박스테이크, 오븐 로스트 치킨, 앨리스 시그니처 디저트.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">디즈니랜드 3대 필수 간식</span>
-          <span class="badge badge-pink">길거리 스낵</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>스모크 칠면조 다리(터키 레그):</strong> 웨스턴랜드 '척 왜건'에서 판매하는 훈제 터키.</div>
-          <div><strong>미키 츄러스 (크리스마스 시즌 맛):</strong> 미키마우스 단면 모양의 달콤한 시나몬/초코 츄러스.</div>
-          <div><strong>그린 리틀 멘 모찌:</strong> 토이스토리 알린 모양의 3색(딸기, 초코, 바닐라) 쫄깃한 아이스 모찌.</div>
-        </div>
-      </div>
-    </div>
-    <a href="#home" class="bottom-home-btn">🏠 첫 화면으로 돌아가기</a>
-  </section>
-
-  <!-- ==================== [4일차 상세 화면] ==================== -->
-  <section id="view-day4" class="view-section">
-    <div class="detail-header">
-      <span class="d-date">DAY 4 • 12/02 (수)</span>
-      <h2>도쿄역 · 롯폰기 · 도쿄타워</h2>
-      <p>캐릭터 스트리트와 마루노우치, 롯폰기 케야키자카 & 도쿄타워 야경</p>
-    </div>
-
-    <div class="section-label">🕒 시간별 동선</div>
-    <div class="timeline-list">
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">10:30 ~ 14:00</span>
-          <span class="badge badge-pink">치이카와 랜드</span>
-        </div>
-        <div class="tl-route">이케부쿠로 → 도쿄역</div>
-        <div class="tl-desc">도쿄역 1번가 '캐릭터 스트리트' (치이카와 랜드 도쿄역점) 쇼핑 & 마루노우치 해리포터 일루미네이션</div>
-        <div class="tl-note">• 도쿄역 한정 역장 치이카와 굿즈<br>• <strong>마루노우치 × 해리포터</strong> 스노우트리 일루미네이션 감상</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">14:30 ~ 17:30</span>
-          <span class="badge badge-blue">일루미네이션 명소</span>
-        </div>
-        <div class="tl-route">도쿄역 → 롯폰기 힐즈</div>
-        <div class="tl-desc">롯폰기 힐즈 모리타워 단지 산책 및 케야키자카 거리 약 97만 개 LED 라이트업 감상</div>
-        <div class="tl-note">• 케야키자카 점등: 17:00~23:00 (도쿄타워 배경 포토존)<br>• 롯폰기 힐즈 크리스마스 마켓 둘러보기</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">18:00 ~ 20:30</span>
-        </div>
-        <div class="tl-route">롯폰기 → 도쿄타워 / 시바공원</div>
-        <div class="tl-desc">도쿄타워 오렌지 라이트업 감상, 시바공원 산책 후 이케부쿠로 복귀</div>
-        <div class="tl-note">• 시바공원 일대 도쿄타워 뷰 야경 촬영 명소<br>• 메인 덱 관람(희망 시 현장/온라인 발권)</div>
-      </div>
-    </div>
-
-    <div class="section-label">✨ 4일차 추천 스팟 & 맛집</div>
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">도쿄역 1번가 & 마루노우치</span>
-          <span class="badge badge-green">도쿄역 스팟</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>도쿄 캐릭터 스트리트:</strong> 치이카와 랜드 도쿄역점 및 일본 대표 캐릭터 샵 집결.</div>
-          <div><strong>마루노우치 나카도리:</strong> 은행나무길을 따라 명품 플래그십과 해리포터 일루미네이션이 연출되는 거리.</div>
-          <div><strong>KITTE 옥상정원:</strong> 도쿄역 붉은 벽돌 역사를 한눈에 내려다보는 무료 전망대.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">롯폰기 힐즈 & 케야키자카</span>
-          <span class="badge badge-blue">일루미네이션 스팟</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>케야키자카 거리:</strong> 97만 개 LED 불빛 너머로 오렌지빛 도쿄타워가 프레임에 잡히는 핫스팟.</div>
-          <div><strong>오오야네 플라자:</strong> 독일 정통 크리스마스 오너먼트와 소시지, 글뤼바인을 파는 크리스마스 마켓.</div>
-          <div><strong>도쿄 시티뷰:</strong> 모리타워 52층에서 내려다보는 도쿄 도심 파노라마 야경.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">츠지한 (つじ半) 니혼바시 본점</span>
-          <span class="badge badge-amber">도쿄역 점심 미식</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>타베로그 3.78★ (도쿄 1위급 카이센동) / 구글 평점 4.5★</strong></div>
-          <div><strong>메뉴:</strong> 제철 해산물을 화려하게 쌓아 올린 제이타쿠동. 참깨 소스 회를 곁들이다 마지막에 따뜻한 도미 육수 오차즈케로 마무리.</div>
-          <div><strong>위치:</strong> 도쿄역 야에스 출구 도보 5분 (오픈 전 대기 권장).</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">롯폰기 이마카츠 (イマカツ) 본점</span>
-          <span class="badge badge-amber">롯폰기 석식</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>타베로그 3.7★ (미쉐린 빕구루망 수록) / 구글 평점 4.3★</strong></div>
-          <div><strong>메뉴:</strong> 입에서 사르르 녹아내리는 극강의 부드러움 '사사미카츠(닭안심카츠)'와 프리미엄 로스카츠.</div>
-          <div><strong>위치:</strong> 롯폰기역 4b 출구 도보 2분.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">에쉬레 메종 뒤 뵈르 (ÉCHIRÉ)</span>
-          <span class="badge badge-pink">마루노우치 디저트</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>타베로그 3.75★ / 구글 평점 4.3★</strong></div>
-          <div><strong>소개:</strong> 프랑스 최고급 에쉬레 버터 세계 최초의 콘셉트 베이커리.</div>
-          <div><strong>메뉴:</strong> 버터 향 가득한 크루아상, 마들렌, 피낭시에, 한정 수량 버터 케이크.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">하브스 (HARBS) 롯폰기 힐즈점</span>
-          <span class="badge badge-pink">롯폰기 케이크</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>구글 평점 4.2★</strong></div>
-          <div><strong>메뉴:</strong> 얇은 크레페 사이사이 제철 과일과 신선한 생크림이 겹겹이 쌓인 시그니처 '밀크레이프'.</div>
-          <div><strong>위치:</strong> 롯폰기 힐즈 힐사이드 1층.</div>
-        </div>
-      </div>
-    </div>
-    <a href="#home" class="bottom-home-btn">🏠 첫 화면으로 돌아가기</a>
-  </section>
-
-  <!-- ==================== [5일차 상세 화면] ==================== -->
-  <section id="view-day5" class="view-section">
-    <div class="detail-header">
-      <span class="d-date">DAY 5 • 12/03 (목)</span>
-      <h2>치이카와 파크 · 아사쿠사</h2>
-      <p>선샤인시티 치이카와 파크 관람 후 도미인 온천 및 센소지 야경</p>
-    </div>
-
-    <div class="section-label">🕒 시간별 동선</div>
-    <div class="timeline-list">
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">09:30 ~ 13:30</span>
-          <span class="badge badge-red">예약확정 (11:00)</span>
-        </div>
-        <div class="tl-route">이케부쿠로 (체크아웃)</div>
-        <div class="tl-desc">에어비앤비 체크아웃(10:00) 후 코인로커 짐 보관 → <strong>11:00 치이카와 파크 관람</strong></div>
-        <div class="tl-note">• 위치: 선샤인시티 아넥스 B1F~1F<br>• 클룩 모바일 바우처 제시 입장 후 한정 굿즈 쇼핑</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">14:00 ~ 15:30</span>
-        </div>
-        <div class="tl-route">이케부쿠로 → 아사쿠사</div>
-        <div class="tl-desc">짐 찾고 아사쿠사 이동, <strong>도미인 익스프레스 아사쿠사 체크인(15:00~)</strong></div>
-        <div class="tl-note">• 이동: 야마노테선(우에노) + 긴자선 (약 35분)<br>• 리버 사이드뷰 객실 짐 풀기 & 온천 대욕장/족욕 휴식</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">16:30 ~ 20:30</span>
-          <span class="badge badge-blue">경내 24시간 개방</span>
-        </div>
-        <div class="tl-route">센소지 & 아사쿠사</div>
-        <div class="tl-desc">센소지 경내 야간 라이트업 산책, 호피거리 또는 몬자야키 석식</div>
-        <div class="tl-note">• 본당 마감: 17:00 / 경내 조명 점등은 23:00까지 지속</div>
-      </div>
-    </div>
-
-    <div class="section-label">🌸 5일차 추천 스팟 & 맛집</div>
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">치이카와 파크 & 선샤인시티</span>
-          <span class="badge badge-green">이케부쿠로 오전</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>치이카와 파크 (11:00 확정):</strong> 선샤인시티 아넥스 B1F 입장, 인터랙티브 전시 및 단독 굿즈 쇼핑.</div>
-          <div><strong>선샤인 60 전망대 (텐보우 파크):</strong> 잔디밭 인테리어에서 도쿄 전경을 즐기는 힐링 전망대.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">센소지 경내 & 호피 거리</span>
-          <span class="badge badge-green">아사쿠사 오후/야간</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>센소지 경내 라이트업:</strong> 붉은 카미나리몬과 5층탑에 켜지는 전통 등불 야경 (23:00까지 점등).</div>
-          <div><strong>호피 거리(ホッピー通り):</strong> 야외 포장마차 테이블에서 시원한 호피 맥주와 소 힘줄 조림(규스지니코미)을 즐기는 로컬 골목.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">아사쿠사 규카츠 (浅草 牛かつ)</span>
-          <span class="badge badge-amber">아사쿠사 점심/석식</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>구글 평점 4.6★ (리뷰 6,000개 이상)</strong></div>
-          <div><strong>메뉴:</strong> 겉은 얇게 튀기고 속은 미디엄 레어로 나오는 소고기 카츠를 개인 미니 화로에 구워 생와사비와 토로로(마) 밥에 곁들여 먹는 명소.</div>
-          <div><strong>위치:</strong> 카미나리몬 맞은편 지하 1층.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">아사쿠사 몬자야키 로컬 명가</span>
-          <span class="badge badge-amber">아사쿠사 석식</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>몬자 모헤지(もへじ) 아사쿠사점:</strong> 타베로그 3.5★ / 구글 4.4★. 츠키지 어시장 직송 명란 치즈 몬자야키 전문점.</div>
-          <div><strong>도미인 야식 소바:</strong> 저녁 식사 후 도미인 호텔 투숙객에게 무료 제공되는 따뜻한 요나키소바(간장 라멘).</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">스즈키엔 (壽々喜園) 아사쿠사</span>
-          <span class="badge badge-pink">아사쿠사 말차 젤라또</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>구글 평점 4.3★ / 타베로그 3.65★</strong></div>
-          <div><strong>메뉴:</strong> 세계에서 가장 진한 1단계부터 7단계 프리미엄 녹차 젤라또 (농도 7단계 추천).</div>
-          <div><strong>위치:</strong> 센소지 본당 뒤편 도보 3분.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">도미인 천연온천 & 리버뷰 휴식</span>
-          <span class="badge badge-blue">숙소 힐링</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>대욕장 & 족욕탕:</strong> 스미다가와 강변과 스카이트리를 바라보는 옥상 야외 족욕탕 및 온천 사우나.</div>
-          <div><strong>무료 서비스:</strong> 온천 후 제공되는 아이스크림 및 아침 요구르트.</div>
-        </div>
-      </div>
-    </div>
-    <a href="#home" class="bottom-home-btn">🏠 첫 화면으로 돌아가기</a>
-  </section>
-
-  <!-- ==================== [6일차 상세 화면] ==================== -->
-  <section id="view-day6" class="view-section">
-    <div class="detail-header">
-      <span class="d-date">DAY 6 • 12/04 (금)</span>
-      <h2>아사쿠사 골목 · 갓파바시</h2>
-      <p>나카미세·덴보인도리 산책과 갓파바시 그릇·소품 쇼핑 후 귀국</p>
-    </div>
-
-    <div class="section-label">🕒 시간별 동선</div>
-    <div class="timeline-list">
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">09:30 ~ 11:00</span>
-        </div>
-        <div class="tl-route">아사쿠사 (체크아웃)</div>
-        <div class="tl-desc">도미인 조식 및 리버뷰 즐긴 후 호텔 체크아웃(11:00) 및 프런트 짐 보관</div>
-        <div class="tl-note">• 호텔에 짐 맡기고 가볍게 도보 출발<br>• 또는 아사쿠사역 코인로커 이용</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">11:00 ~ 12:30</span>
-          <span class="badge badge-amber">아사쿠사 골목 투어</span>
-        </div>
-        <div class="tl-route">나카미세도리 & 덴보인도리</div>
-        <div class="tl-desc">활기찬 나카미세도리 간식 투어 및 에도 풍경의 <strong>덴보인도리(伝法院通り)</strong> 로컬 수공예 골목 산책</div>
-        <div class="tl-note">• 아사쿠사 멘치카츠, 키비당고, 화월당 점보 메론빵<br>• 덴보인도리 전통 빗/잡화/공예 로컬 공방</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">12:30 ~ 16:30</span>
-          <span class="badge badge-blue">로컬 명소 추천</span>
-        </div>
-        <div class="tl-route">갓파바시 도구거리 & 로컬 카페</div>
-        <div class="tl-desc">일본 주방·식기 장인 골목 <strong>'갓파바시 도구거리'</strong> 소품 쇼핑 및 레트로 킷사텐/스미다가와 카페 티타임</div>
-        <div class="tl-note">• 도자기 그릇, 정교한 디저트 음식 모형 굿즈 쇼핑<br>• 로컬 커피(Feb's coffee, 킷사 텐고쿠 등) 휴식 & 여유로운 늦은 점심</div>
-      </div>
-
-      <div class="timeline-card">
-        <div class="tl-top">
-          <span class="tl-time">16:30 ~ 20:00</span>
-        </div>
-        <div class="tl-route">아사쿠사 → 공항 (귀국)</div>
-        <div class="tl-desc">도미인 호텔 복귀하여 짐 수령 → 아사쿠사역 직통 탑승 및 공항 이동</div>
-        <div class="tl-note">• 나리타: 게이세이 액세스 특급 (약 55분)<br>• 하네다: 게이큐선 직통 (약 35분)<br>• <strong>17:30까지 공항 도착 권장 (비행기 출발 20:00)</strong></div>
-      </div>
-    </div>
-
-    <div class="section-label">🏮 6일차 추천 스팟 & 맛집</div>
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">갓파바시 도구거리 (かっぱ橋)</span>
-          <span class="badge badge-blue">로컬 골목 스팟</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>소개:</strong> 100년 넘는 역사를 지닌 약 800m 길이의 일본 최대 주방용품·그릇 거리.</div>
-          <div><strong>볼거리:</strong> 감각적인 일본 가정식 도자기 그릇, 장인 칼, 커피 드립 기구, 실제 음식과 똑같은 <strong>정교한 음식 모형(샘플) 열쇠고리 및 미니어처</strong> 숍 집결.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">덴보인도리 & 니시산도 상점가</span>
-          <span class="badge badge-amber">에도 레트로 골목</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>덴보인도리:</strong> 나카미세와 수직으로 교차하는 길로, 에도시대 분위기의 기와지붕과 처마 끝 지라이야 인형 등이 숨어있는 아기자기한 전통 잡화 거리.</div>
-          <div><strong>니시산도:</strong> 일본 최초로 목재 바닥으로 지어진 전통 축제풍 아케이드 골목. 금붕어 잡기 체험과 복고풍 포토존.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">아사쿠사 멘치 & 키비당고</span>
-          <span class="badge badge-pink">나카미세 간식</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>아사쿠사 멘치 (浅草メンチ):</strong> 구글 평점 4.3★. 육즙이 뚝뚝 떨어지는 카나가와현 명품 고기 크로켓.</div>
-          <div><strong>아사쿠사 키비당고 아즈마:</strong> 콩가루를 듬뿍 묻힌 쫀득한 꼬치 수수경단과 따뜻한 감주.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">아사쿠사 화월당 (花月堂) 본점</span>
-          <span class="badge badge-pink">명물 디저트</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>구글 평점 4.4★ / 매일 수천 개 완판</strong></div>
-          <div><strong>메뉴:</strong> 3시간 동안 발효시켜 겉은 극도로 바삭하고 속은 깃털처럼 부드러운 '점보 메론빵'과 말차 아이스크림 메론빵.</div>
-          <div><strong>위치:</strong> 니시산도 상점가 입구.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">아사쿠사 요시카미 (ヨシカミ)</span>
-          <span class="badge badge-amber">마지막 점심 추천</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>타베로그 3.55★ (경양식 백명점) / 구글 평점 4.1★</strong></div>
-          <div><strong>메뉴:</strong> 1951년 창업한 전설적인 레트로 양식당. 진한 데미글라스 소스의 비프스튜, 오므라이스, 하야시라이스.</div>
-          <div><strong>위치:</strong> 록쿠거리 인근 (아사쿠사역 도보 5분).</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">Feb's coffee & 킷사 텐고쿠</span>
-          <span class="badge badge-pink">골목 감성 카페</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>킷사 텐고쿠(天国):</strong> 귀여운 '天国' 불도장이 찍힌 클래식 핫케이크와 사이폰 커피.</div>
-          <div><strong>Feb's coffee & scone:</strong> 조용한 골목의 스페셜티 커피 & 따뜻한 버터 스콘 맛집.</div>
-        </div>
-      </div>
-    </div>
-    <a href="#home" class="bottom-home-btn">🏠 첫 화면으로 돌아가기</a>
-  </section>
-
-  <!-- ==================== [카테고리 1: 치이카와 명소 총정리] ==================== -->
-  <section id="view-chiikawa" class="view-section">
-    <div class="detail-header">
-      <span class="d-date">SPECIAL CATEGORY 1</span>
-      <h2>🐹 치이카와 공식 명소 총정리</h2>
-      <p>도쿄 및 가와고에 일정에 포함된 치이카와 6대 필수 코스</p>
-    </div>
-
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">치이카와 파크 (ちいかわパーク)</span>
-          <span class="badge badge-pink">12/3 오전 11시 확정</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>위치:</strong> 이케부쿠로 선샤인시티 아넥스 B1F~1F</div>
-          <div><strong>특징:</strong> 치이카와 세계관을 재현한 대형 실내 체험 공간, 포토존 및 파크 한정 퓨와코로 마스코트/인형 굿즈샵 운영.</div>
-          <div><strong>팁:</strong> 클룩 사전 예약 완료 (시간 맞춰 B1F 입장).</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">치이카와 레스토랑 & 굿즈샵</span>
-          <span class="badge badge-pink">이케부쿠로 (2일차 저녁)</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>위치:</strong> 이케부쿠로 PARCO 본관 7층</div>
-          <div><strong>특징:</strong> 패밀리 레스토랑 콘셉트의 한정 메뉴 제공. 레스토랑 식사는 사전 추첨제이나, <strong>기프트숍(굿즈 판매 구역)은 현장 상황에 따라 자유/정리권 입장 가능</strong>.</div>
-          <div><strong>영업:</strong> 11:00 ~ 21:00</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">치이카와 라멘 부타 (ラーメン 豚)</span>
-          <span class="badge badge-pink">시부야 / 이케부쿠로</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>위치:</strong> 시부야 PARCO 지하 1층 / 이케부쿠로 PARCO 본관</div>
-          <div><strong>특징:</strong> 작중 등장하는 지로계 라멘 재현(치이카와 미니, 하치와레 스몰, 우사기 라지). 한정 그릇/굿즈 판매.</div>
-          <div><strong>팁:</strong> 사전 예약 우선이며, 당일 잔여석 발생 시 현장 정리권 발급 운영.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">치이카와 랜드 2대 주요 매장 (상설)</span>
-          <span class="badge badge-blue">일정별 동선</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>1. 하라주쿠점:</strong> 키디랜드 하라주쿠 1일차 방문 (최대 규모 물량)</div>
-          <div><strong>2. 도쿄역점:</strong> 도쿄역 1번가 캐릭터 스트리트 4일차 방문 (도쿄역 한정 역장 굿즈)</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">치이카와 베이커리 (오모테산도)</span>
-          <span class="badge badge-pink">1일차 하라주쿠</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>위치:</strong> 도큐 플라자 오모테산도 '오모카도' 3층</div>
-          <div><strong>특징:</strong> 유명 제빵사가 감수한 캐릭터 모티브 빵 및 베이커리 한정 접시, 텀블러, 틴케이스 굿즈 판매.</div>
-          <div><strong>팁:</strong> 빵 구매는 사전예약 우선이나 오후 시간대 굿즈 구역은 자유 입장이 운영되기도 함.</div>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">치이카와 모구모구 혼포 (가와고에점)</span>
-          <span class="badge badge-amber">2일차 가와고에</span>
-        </div>
-        <div class="info-card-body">
-          <div><strong>위치:</strong> 사이타마현 가와고에시 모토마치 2-7-9 (과자골목 인근)</div>
-          <div><strong>특징:</strong> 전국에 교토와 가와고에 단 두 곳뿐인 먹거리 테마 매장. 전통 고구마/과자 컬래버 굿즈 및 전통 복장의 한정 마스코트 독점 판매.</div>
-          <div><strong>주의:</strong> 09:30 ~ 17:30 (조기 품절 및 조기 마감 주의)</div>
-        </div>
-      </div>
-    </div>
-    <a href="#home" class="bottom-home-btn">🏠 첫 화면으로 돌아가기</a>
-  </section>
-
-  <!-- ==================== [카테고리 2: 겨울 일루미네이션 10선] ==================== -->
-  <section id="view-illumination" class="view-section">
-    <div class="detail-header">
-      <span class="d-date">SPECIAL CATEGORY 2</span>
-      <h2>🎄 2026 도쿄 겨울 일루미네이션 10선</h2>
-      <p>여행 기간(11/29~12/04) 중 즐길 수 있는 도쿄 야간 라이트업 명소</p>
-    </div>
-
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">1. 마루노우치 × 해리포터</span>
-          <span class="badge badge-blue">11/12~12/25 [4일차]</span>
-        </div>
-        <div class="info-card-body">
-          도쿄역 마루노우치 일대. 올해 해리포터 테마와 거대한 호그와트 스노우트리가 메인 광장에 연출됩니다. 4일차 도쿄역 치이카와랜드 방문 시 함께 감상하기 최적입니다.
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">2. 롯폰기 힐즈 케야키자카</span>
-          <span class="badge badge-blue">11/5~12/25 [4일차]</span>
-        </div>
-        <div class="info-card-body">
-          약 97만 개의 은백색/청색 LED 전구가 가로수길을 수놓으며, 도쿄타워를 정면 배경으로 감상할 수 있는 도쿄 No.1 일루미네이션 거리. 오오야네 플라자 크리스마스 마켓 동시 개최.
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">3. CHRISTMAS HILLS 2026</span>
-          <span class="badge badge-blue">11월부터 순차 개시</span>
-        </div>
-        <div class="info-card-body">
-          모리빌딩 주관으로 롯폰기·아자부다이·도라노몬·오모테산도·아크힐즈 등 도쿄 도심 복합 힐즈 단지 전역에서 열리는 프리미엄 크리스마스 페스티벌.
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">4. 도쿄 미드타운 히비야 × 어벤져스</span>
-          <span class="badge badge-blue">11/12 ~ 27/2/28</span>
-        </div>
-        <div class="info-card-body">
-          히비야 스텝 광장에 약 8m 크기의 어벤져스 테마 대형 트리가 등장하며, 마블 팬들을 위한 웅장한 사운드와 입체 조명 연출이 펼쳐집니다.
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">5. 신토요스 크리스마스 마켓</span>
-          <span class="badge badge-blue">11/20 ~ 12/25</span>
-        </div>
-        <div class="info-card-body">
-          2026년 첫 개최되는 수변 크리스마스 마켓. 토요스 워터프론트의 바닷바람과 함께 야경, 따뜻한 글뤼바인, 독일식 간식을 즐길 수 있습니다.
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">6. 시바공원 크리스마스 마켓</span>
-          <span class="badge badge-blue">12/4~12/25 [도쿄타워뷰]</span>
-        </div>
-        <div class="info-card-body">
-          도쿄타워 바로 아래 프린스 시바공원에서 개최되는 대표 마켓. 독일 드레스덴 전통 대형 크리스마스 피라미드와 클래식 오렌지 라이트업을 함께 즐길 수 있습니다.
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">7. 오모테산도 일루미네이션</span>
-          <span class="badge badge-blue">12/1~12/25 [무료 명소]</span>
-        </div>
-        <div class="info-card-body">
-          하라주쿠역부터 오모테산도 힐즈까지 1.1km 느티나무 가로수 150여 그루에 샴페인 골드 LED가 켜지는 도쿄 대표 무료 일루미네이션 명소입니다.
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">8. 청의 동굴 SHIBUYA (시부야)</span>
-          <span class="badge badge-blue">12/11 ~ 12/27</span>
-        </div>
-        <div class="info-card-body">
-          시부야 공원거리부터 요요기 공원 케야키 가로수길까지 전체가 푸른빛 LED 바다로 변신하는 시부야 최고의 무료 명소입니다.
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">9. 요미우리랜드 쥬얼미네이션</span>
-          <span class="badge badge-blue">10/29 ~ 27/4/4</span>
-        </div>
-        <div class="info-card-body">
-          도쿄권 최대 규모의 쥬얼리 테마 일루미네이션. 보석빛으로 물든 대형 관람차와 롤러코스터, 분수 레이저 쇼를 감상할 수 있는 테마파크입니다.
-        </div>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-header">
-          <span class="info-card-title">10. 요요기 포레스트 오브 라이츠</span>
-          <span class="badge badge-blue">11/13 ~ 27/1/11</span>
-        </div>
-        <div class="info-card-body">
-          올해 새롭게 선보이는 약 1.8km 구간의 도심형 숲속 체험형 빛의 길. 도심 속 자연과 미디어 아트가 결합된 야간 산책 스폿입니다.
-        </div>
-      </div>
-    </div>
-    <a href="#home" class="bottom-home-btn">🏠 첫 화면으로 돌아가기</a>
-  </section>
-
-  <footer>
-    도쿄 5박 6일 여행 플래너 • 알찬 미식 투어와 함께 완벽한 도쿄 여행 되세요!
-  </footer>
+ <!-- 상단 고정 바 -->
+ <nav class="top-nav">
+ <div class="nav-title" id="navTitle">🇯🇵 도쿄 5박 6일 플래너</div>
+ <button class="back-btn" id="backBtn" onclick="showView('schedule')">← 일정 목록</button>
+ </nav>
+
+ <!-- 상단 메인 탭 (일정 탭 vs 금액/결제 탭) -->
+ <div class="main-tabs" id="mainTabs">
+ <button class="tab-btn active" id="tab-schedule" onclick="switchMainTab('schedule')">🗓️ 여행 일정표</button>
+ <button class="tab-btn" id="tab-budget" onclick="switchMainTab('budget')">💳 금액 · 결제내역</button>
+ </div>
+
+ <!-- ==================== [메인 탭 1: 여행 일정표] ==================== -->
+ <main id="view-schedule" class="view-section active">
+ <div class="hero-banner">
+ <span class="hero-tag">2026. 11. 29 (일) ~ 12. 04 (금) • 2인 여행</span>
+ <h1>도쿄 5박 6일 상세 일정</h1>
+ <p>일차를 누르면 이동 교통편, 락커/열쇠 수령법, 상세 동선이 열립니다.</p>
+ </div>
+
+ <div class="section-label">🗓️ 일자별 상세 타임라인</div>
+ <div class="menu-list">
+ <div class="nav-card" onclick="showView('day1')">
+ <div class="nav-card-left">
+ <div class="day-badge">DAY 1<span>11/29(일)</span></div>
+ <div class="nav-card-info">
+ <h3>출국 · 이케부쿠로 · 신주쿠 · 하라주쿠 · 시부야</h3>
+ <p>북가좌초 리무진 → 나리타 → 코인락커/열쇠수령 → 도심 투어</p>
+ </div>
+ </div>
+ <div class="chevron">›</div>
+ </div>
+
+ <div class="nav-card" onclick="showView('day2')">
+ <div class="nav-card-left">
+ <div class="day-badge">DAY 2<span>11/30(월)</span></div>
+ <div class="nav-card-info">
+ <h3>가와고에 오픈런 · 이케부쿠로 백화점 쇼핑</h3>
+ <p>09:30 모구모구 혼포 · 장어 · 고구마 디저트 → 파르코/세이부 쇼핑</p>
+ </div>
+ </div>
+ <div class="chevron">›</div>
+ </div>
+
+ <div class="nav-card" onclick="showView('day3')">
+ <div class="nav-card-left">
+ <div class="day-badge">DAY 3<span>12/01(화)</span></div>
+ <div class="nav-card-info">
+ <h3>도쿄 디즈니랜드 종일 & 야식</h3>
+ <p>오픈런 어트랙션 · 크리스마스 퍼레이드 · 이케부쿠로 복귀 야식</p>
+ </div>
+ </div>
+ <div class="chevron">›</div>
+ </div>
+
+ <div class="nav-card" onclick="showView('day4')">
+ <div class="nav-card-left">
+ <div class="day-badge">DAY 4<span>12/02(수)</span></div>
+ <div class="nav-card-info">
+ <h3>도쿄역 · 긴자 · 롯폰기힐즈 일루미네이션</h3>
+ <p>캐릭터스트리트 · 마루노우치 해리포터 · 긴자 · 케야키자카 야경</p>
+ </div>
+ </div>
+ <div class="chevron">›</div>
+ </div>
+
+ <div class="nav-card" onclick="showView('day5')">
+ <div class="nav-card-left">
+ <div class="day-badge">DAY 5<span>12/03(목)</span></div>
+ <div class="nav-card-info">
+ <h3>치이카와 파크(11시) · 아사쿠사 온천 숙박</h3>
+ <p>선샤인시티 관람 → 도미인 아사쿠사 체크인 · 센소지 야간 산책</p>
+ </div>
+ </div>
+ <div class="chevron">›</div>
+ </div>
+
+ <div class="nav-card" onclick="showView('day6')">
+ <div class="nav-card-left">
+ <div class="day-badge">DAY 6<span>12/04(금)</span></div>
+ <div class="nav-card-info">
+ <h3>아사쿠사 나카미세 · 갓파바시 · 귀국(20:00)</h3>
+ <p>덴보인도리 · 그릇/모형 쇼핑 · 게이세이 액세스 특급 나리타 이동</p>
+ </div>
+ </div>
+ <div class="chevron">›</div>
+ </div>
+ </div>
+
+ <div class="section-label">✨ 테마별 스페셜 가이드</div>
+ <div class="menu-list">
+ <div class="nav-card" onclick="showView('chiikawa')">
+ <div class="nav-card-left">
+ <div class="cat-badge" style="background:#fdf2f8;">🐹</div>
+ <div class="nav-card-info">
+ <h3>치이카와 공식 명소 6선 총정리</h3>
+ <p>파크, 매지컬치이카와, 베이커리, 모구모구 혼포, 도쿄역점 등</p>
+ </div>
+ </div>
+ <div class="chevron">›</div>
+ </div>
+
+ <div class="nav-card" onclick="showView('illumination')">
+ <div class="nav-card-left">
+ <div class="cat-badge" style="background:#eff6ff;">🎄</div>
+ <div class="nav-card-info">
+ <h3>2026 도쿄 겨울 일루미네이션 명소</h3>
+ <p>마루노우치, 히비야 미드타운, 긴자, 롯폰기 케야키자카 완벽 정리</p>
+ </div>
+ </div>
+ <div class="chevron">›</div>
+ </div>
+ </div>
+ </main>
+
+ <!-- ==================== [메인 탭 2: 금액 · 결제내역] ==================== -->
+ <section id="view-budget" class="view-section">
+ <div class="budget-total-card">
+ <span class="b-label">사전 결제 완료 총액 (2인 기준)</span>
+ <div class="b-amount">₩1,342,578</div>
+ <div class="b-per-person">
+ <span>1인당 사전 결제 금액</span>
+ <strong>₩671,289 / 인</strong>
+ </div>
+ </div>
+
+ <!-- 1. 항공권 -->
+ <div class="cost-group-card">
+ <div class="cost-group-header">
+ <span class="cost-group-title">✈️ 항공권 (2인 왕복)</span>
+ <span class="cost-group-subtotal">₩701,030</span>
+ </div>
+ <div class="cost-item">
+ <div class="cost-item-info">
+ <strong>인천(ICN) ↔ 도쿄 나리타(NRT)</strong>
+ <span>출국 11/29(일) 08:40 → 10:55 도착<br>귀국 12/04(금) 20:00 → 22:40 도착</span>
+ </div>
+ <div class="cost-item-price">₩701,030</div>
+ </div>
+ </div>
+
+ <!-- 2. 숙박비 -->
+ <div class="cost-group-card">
+ <div class="cost-group-header">
+ <span class="cost-group-title">🏨 숙박비 (총 5박 / 2인)</span>
+ <span class="cost-group-subtotal">₩413,808</span>
+ </div>
+ <div class="cost-item">
+ <div class="cost-item-info">
+ <strong>숙소 1: 이케부쿠로 에어비앤비 (4박)</strong>
+ <span>11/29(일) ~ 12/03(목) • 체크인 16:00 / 아웃 10:00<br>열쇠 수령: 고양이 카페 모카 라운지 이케부쿠로 동쪽 출구점</span>
+ </div>
+ <div class="cost-item-price">₩279,587</div>
+ </div>
+ <div class="cost-item">
+ <div class="cost-item-info">
+ <strong>숙소 2: 도미인 익스프레스 아사쿠사 (1박)</strong>
+ <span>12/03(목) ~ 12/04(금) • 체크인 15:00 / 아웃 11:00<br>리버 사이드뷰 객실 • 천연온천 대욕장 & 야식 소바</span>
+ </div>
+ <div class="cost-item-price">₩134,221</div>
+ </div>
+ </div>
+
+ <!-- 3. 입장권 / 티켓 -->
+ <div class="cost-group-card">
+ <div class="cost-group-header">
+ <span class="cost-group-title">🎟️ 입장권 & 테마파크 (2인)</span>
+ <span class="cost-group-subtotal">₩227,740</span>
+ </div>
+ <div class="cost-item">
+ <div class="cost-item-info">
+ <strong>도쿄 디즈니랜드 1일 패스포트 (2인)</strong>
+ <span>12/01(화) 종일 이용권 (E-티켓 사전 구매)</span>
+ </div>
+ <div class="cost-item-price">₩169,740</div>
+ </div>
+ <div class="cost-item">
+ <div class="cost-item-info">
+ <strong>치이카와 파크 입장권 (2인)</strong>
+ <span>12/03(목) 11:00 회차 예약 완료 • 선샤인시티 아넥스</span>
+ </div>
+ <div class="cost-item-price">₩58,000</div>
+ </div>
+ </div>
+
+ <!-- 4. 현지 추가 예상 지출 가이드 -->
+ <div class="section-label">💴 현지 추가 예상 경비 (2인 참고용)</div>
+ <div class="local-budget-box">
+ <div class="local-row">
+ <span>🚌 인천공항 리무진 (북가좌초 왕복 2인)</span>
+ <span>약 ₩68,000 (편도 17,000원/인)</span>
+ </div>
+ <div class="local-row">
+ <span>🚆 나리타 공항 특급 왕복 (2인)</span>
+ <span>약 ¥10,000 ~ ¥11,000</span>
+ </div>
+ <div class="local-row">
+ <span>🚇 도쿄 시내 & 가와고에 교통비 (Suica)</span>
+ <span>약 ¥12,000 (1인 ¥6,000 충전)</span>
+ </div>
+ <div class="local-row">
+ <span>🍱 5박 6일 식비 & 카페·간식 (2인)</span>
+ <span>약 ¥65,000 ~ ¥85,000</span>
+ </div>
+ <div class="local-row">
+ <span>🛍️ 치이카와 굿즈 & 백화점 쇼핑</span>
+ <span>개별 예산 (여권 지참 면세)</span>
+ </div>
+ </div>
+ </section>
+
+ <!-- ==================== [1일차 상세 화면] ==================== -->
+ <section id="view-day1" class="view-section">
+ <div class="detail-header">
+ <span class="d-date">DAY 1 • 11/29 (일)</span>
+ <h2>출국 · 이케부쿠로 · 신주쿠 · 하라주쿠 · 시부야</h2>
+ <p>북가좌초 공항버스부터 나리타 이동, 락커·열쇠 수령 및 도심 핵심 투어</p>
+ </div>
+
+ <div class="section-label">🕒 시간별 상세 동선</div>
+ <div class="timeline-list">
+ <!-- 1. 북가좌초 -> 인천공항 -->
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">04:50 ~ 06:30</span>
+ <span class="badge badge-blue">공항버스 6005번</span>
+ </div>
+ <div class="tl-route">북가좌초등학교 → 인천공항 제1/제2터미널</div>
+ <div class="tl-desc">08:40 비행기 탑승을 위해 늦어도 <strong>06:30까지 인천공항 도착</strong> 목표</div>
+ <div class="tl-note">
+ • <strong>탑승 노선:</strong> 공항리무진 <strong>6005번</strong> (정류장명: 북가좌초등학교 / 정류장번호 13-173)<br>
+ • <strong>추천 탑승 시간:</strong> 첫차 04:20 ~ 05:10 사이 배차 탑승 필수 (소요시간 약 60~70분)<br>
+ • <strong>요금 및 결제:</strong> 성인 17,000원 (티머니/후불교통카드 태그 또는 티머니GO 앱 사전좌석예약 권장)<br>
+ • <strong>하차 위치:</strong> 이용 항공사에 맞춰 인천공항 3층 출국장(T1 또는 T2) 바로 앞 하차
+ </div>
+ </div>
+
+ <!-- 2. 나리타 공항 -> 이케부쿠로역 -->
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">10:55 ~ 13:00</span>
+ <span class="badge badge-green">공항철도 이동</span>
+ </div>
+ <div class="tl-route">나리타 공항 도착 → 이케부쿠로역 이동</div>
+ <div class="tl-desc">10:55 나리타 착륙 및 입국 수속(약 40~50분) 후 이케부쿠로 직행/환승 이동</div>
+ <div class="tl-note">
+ • <strong>추천 루트 ① (가장 빠름 · 약 60분):</strong><br>
+ 나리타 공항 → <strong>게이세이 스카이라이너</strong> 탑승(41분) → 닛포리(日暮里)역 하차 → JR 야마노테선 환승(12분) → 이케부쿠로역 도착 (총 약 ¥2,750)<br>
+ • <strong>추천 루트 ② (환승 없음 · 약 85~90분):</strong><br>
+ 나리타 공항 → <strong>JR 나리타 익스프레스(N'EX)</strong> 이케부쿠로 직통 열차 탑승 (좌석 지정제, 왕복 티켓 구매 시 할인 혜택)<br>
+ • <strong>추천 루트 ③ (가성비 리무진 · 약 95분):</strong><br>
+ 공항 리무진버스 '이케부쿠로역 서쪽출구/선샤인시티'행 탑승 (짐 싣기 편리)
+ </div>
+ </div>
+
+ <!-- 3. 이케부쿠로 코인락커 & 에어비앤비 열쇠 수령 -->
+ <div class="timeline-card highlight-amber">
+ <div class="tl-top">
+ <span class="tl-time">13:00 ~ 13:45</span>
+ <span class="badge badge-amber">짐 보관 & 열쇠 수령</span>
+ </div>
+ <div class="tl-route">이케부쿠로 코인락커 보관 & 열쇠전달센터 방문</div>
+ <div class="tl-desc">숙소 체크인(16:00) 전 캐리어 보관 후 미리 열쇠를 수령해 저녁 입실 준비</div>
+ <div class="tl-note">
+ • <strong>① 코인락커 짐 보관 방법 (이케부쿠로역 동쪽·북쪽 출구 부엉이 동상 부근):</strong><br>
+ - 역 개찰구를 나와 <strong>동쪽 출구(東口) / 북쪽 출구(北口 · 파르코 방향)</strong> 방면 이정표를 따라 이동하면 유명한 <strong>이케후쿠로(부엉이 동상)</strong> 만남의 광장이 나옵니다.<br>
+ - 부엉이 동상 바로 옆 통로와 파르코(PARCO) 연결 지하 통로 벽면에 대형(캐리어용 ¥700~¥900) 코인락커가 밀집해 있습니다.<br>
+ - <strong>사용법:</strong> 빈 락커에 캐리어를 넣고 문을 닫은 뒤 중앙 터치스크린에서 락커 번호 선택 → <strong>Suica/Pasmo 교통카드</strong> 또는 동전/지폐 결제 → <strong>영수증(비밀번호/QR코드)</strong> 반드시 사진 촬영 및 보관!<br><br>
+ • <strong>② 에어비앤비 열쇠전달센터 방문 및 열쇠 수령:</strong><br>
+ - <strong>장소:</strong> 고양이 카페 모카 라운지 이케부쿠로 동쪽 출구점 (Cat Cafe MOCHA Lounge)<br>
+ - <strong>주소:</strong> 도쿄도 도시마구 히가시이케부쿠로 1-22-5 Sankee빌딩 4F (이케부쿠로역 동쪽 출구 도보 약 3분, 선샤인60 거리 초입)<br>
+ - <strong>운영시간:</strong> 10:00 ~ 21:00<br>
+ - <strong>수령 방법:</strong> 4층 엘리베이터 하차 후 카운터(또는 키 전달 전용 부스/태블릿)에서 에어비앤비 호스트가 전달한 <strong>예약 코드(체크인 코드) 및 여권</strong>을 제시하면 숙소 실물 열쇠(또는 키박스 번호 안내서)를 수령할 수 있습니다.<br>
+ - <em>※ 팁: 낮에 열쇠를 미리 받아두면 밤늦게 일정이 끝나도 21:00 마감 걱정 없이 바로 숙소로 들어갈 수 있습니다!</em>
+ </div>
+ </div>
+
+ <!-- 4. 신주쿠 -->
+ <div class="timeline-card highlight-pink">
+ <div class="tl-top">
+ <span class="tl-time">14:00 ~ 16:00</span>
+ <span class="badge badge-pink">매지컬치이카와 & 단풍</span>
+ </div>
+ <div class="tl-route">이케부쿠로 → 신주쿠 (매지컬치이카와 & 신주쿠교엔)</div>
+ <div class="tl-desc">JR 야마노테선 또는 사이쿄선 탑승 (이케부쿠로 → 신주쿠 약 5~8분 소요)</div>
+ <div class="tl-note">
+ • <strong>매지컬 치이카와 스토어 (마루이 본관):</strong> 신주쿠 마루이 본관(Shinjuku Marui Main Building) 1층 상설 매장 방문. 마법소녀 콘셉트 인형·키링·굿즈 쇼핑 (혼잡 시 입구 정리권 확인)<br>
+ • <strong>신주쿠 교엔(新宿御苑) 공원 산책:</strong> 마루이 본관에서 도보 5분 거리(신주쿠문 입장). 11월 말 황금빛 은행나무와 붉은 단풍 절정 시기!<br>
+ - <em>⚠️ 동절기 운영 주의:</em> <strong>16:00 입장 마감 / 16:30 폐원</strong>이므로 늦어도 15:00 전후 입장 추천 (교통카드 태그 입장 ¥500)
+ </div>
+ </div>
+
+ <!-- 5. 하라주쿠 & 오모테산도 -->
+ <div class="timeline-card highlight-pink">
+ <div class="tl-top">
+ <span class="tl-time">16:15 ~ 18:15</span>
+ <span class="badge badge-pink">치이카와 베이커리</span>
+ </div>
+ <div class="tl-route">신주쿠 → 하라주쿠 · 오모테산도 힐즈</div>
+ <div class="tl-desc">JR 야마노테선(신주쿠 → 하라주쿠 4분) 또는 도보/부도심선 이동</div>
+ <div class="tl-note">
+ • <strong>치이카와 베이커리 (Chiikawa Bakery):</strong> 도큐 플라자 오모테산도 '오모카도(OMOKADO)' 3층. 치이카와·하치와레·우사기 모양 캐릭터 빵 간식 및 베이커리 한정 머그·접시·굿즈 구경 (빵 구매는 사전예약 우선, 굿즈존 운영 여부 현장 확인)<br>
+ • <strong>키디랜드 하라주쿠점 (치이카와 랜드):</strong> 도보 5분 거리, 4층 치이카와 전문 코너도 함께 구경 가능<br>
+ • <strong>오모테산도 힐즈(Omotesando Hills):</strong> 안도 다다오 설계의 세련된 건축물과 본관 아트리움 대계단 <strong>크리스마스 트리 & 조명 연출</strong> 감상
+ </div>
+ </div>
+
+ <!-- 6. 시부야 -->
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">18:30 ~ 21:00</span>
+ <span class="badge badge-red">시부야 스카이 야경</span>
+ </div>
+ <div class="tl-route">시부야 스크램블 교차로 · 시부야 스카이 · 저녁 식사</div>
+ <div class="tl-desc">오모테산도에서 도보(약 15분) 또는 메트로 긴자선(1정거장) 시부야 이동</div>
+ <div class="tl-note">
+ • <strong>시부야 스크램블 교차로:</strong> 하치코 출구 앞 세계 최대 횡단보도 인파 체험 및 인증샷<br>
+ • <strong>시부야 스카이 (SHIBUYA SKY):</strong> 시부야 스크램블 스퀘어 14층에서 전용 엘리베이터 탑승 → 229m 루프탑에서 도쿄 야경 감상 (방문 4주 전 00:00 온라인 사전예약 필수)<br>
+ • <strong>시부야 저녁 식사:</strong> 시부야 스카이 건물 내 레스토랑가 또는 세이부 백화점 카츠미도리 초밥, 시부야 파르코 지하 카오스 키친 등에서 석식
+ </div>
+ </div>
+
+ <!-- 7. 이케부쿠로 복귀 -->
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">21:15 ~ 22:30</span>
+ <span class="badge badge-green">숙소 체크인</span>
+ </div>
+ <div class="tl-route">이케부쿠로 복귀 → 락커 짐 회수 → 편의점 쇼핑 & 숙소 입실</div>
+ <div class="tl-desc">JR 야마노테선 또는 메트로 후쿠토신선 탑승 (시부야 → 이케부쿠로 약 12~16분)</div>
+ <div class="tl-note">
+ • 부엉이 동상 부근 코인락커에서 영수증(또는 교통카드) 태그 후 캐리어 회수<br>
+ • 숙소 가는 길 세븐일레븐/로손/패밀리마트 들러 야식·아침 간식·음료 쇼핑<br>
+ • 낮에 받아둔 열쇠로 이케부쿠로 에어비앤비 입실 및 첫날 휴식
+ </div>
+ </div>
+ </div>
+ <button class="bottom-home-btn" onclick="showView('schedule')">🏠 일정 목록으로 돌아가기</button>
+ </section>
+
+ <!-- ==================== [2일차 상세 화면] ==================== -->
+ <section id="view-day2" class="view-section">
+ <div class="detail-header">
+ <span class="d-date">DAY 2 • 11/30 (월)</span>
+ <h2>가와고에 오픈런 · 이케부쿠로 백화점 쇼핑</h2>
+ <p>09:00 가와고에 도착 교통편, 장어 & 고구마 미식, 이케부쿠로 파르코·세이부 집중 쇼핑</p>
+ </div>
+
+ <div class="section-label">🕒 시간별 상세 동선</div>
+ <div class="timeline-list">
+ <!-- 1. 이케부쿠로 -> 가와고에 09:00 도착 교통편 -->
+ <div class="timeline-card highlight-pink">
+ <div class="tl-top">
+ <span class="tl-time">08:05 ~ 09:00</span>
+ <span class="badge badge-pink">09:30 오픈런 대비</span>
+ </div>
+ <div class="tl-route">이케부쿠로역 → 가와고에 모구모구 혼포 (09:00 도착)</div>
+ <div class="tl-desc">09:30 오픈 전 09:00까지 매장 앞 도착을 위한 최적 대중교통 루트</div>
+ <div class="tl-note">
+ • <strong>08:05 이케부쿠로역 출발:</strong> <strong>도부 도조선(東武東上線) 급행(Express)</strong> 가와고에시/신린코엔 방면 탑승 (약 31분 소요, ¥490)<br>
+ • <strong>08:36 가와고에역(川越駅) 도착:</strong> 동쪽 출구(東口)로 나와 버스 승강장으로 이동<br>
+ • <strong>08:42 시내버스 탑승:</strong> 1번·2번·7번 승강장(도부버스 '쿠라노마치' 방면) 탑승 후 약 8~10분 이동 → <strong>'이치반가이(一番街)'</strong> 또는 <strong>'후다노츠지(札の辻)'</strong> 정류장 하차 (도보 1~2분)<br>
+ • <strong>08:55 ~ 09:00 도착 완료:</strong> <strong>Chiikawa Mogumogu Hompo Kawagoe</strong>(과자골목 입구 인근) 도착 후 오픈 대기 줄 합류!
+ </div>
+ </div>
+
+ <!-- 2. 오전 가와고에 오픈런 & 전통거리 -->
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">09:30 ~ 12:00</span>
+ <span class="badge badge-amber">전통거리 산책</span>
+ </div>
+ <div class="tl-route">치이카와 모구모구 혼포 → 가시야요코초 → 토키노카네</div>
+ <div class="tl-desc">가와고에 한정 치이카와 굿즈 쇼핑 후 도보로 핵심 명소 순회</div>
+ <div class="tl-note">
+ • <strong>치이카와 모구모구 혼포 가와고에점 (09:30 오픈):</strong> 고구마·전통 과자 테마 가와고에 한정 인형, 키링, 과자 틴케이스 구매<br>
+ • <strong>가시야 요코초(菓子屋横丁 · 과자골목):</strong> 매장 바로 옆 레트로 골목에서 대형 후가시(흑설탕 과자), 옛날 막대사탕, 센베이 구경<br>
+ • <strong>토키노카네(時の鐘 · 시간의 종):</strong> 구라즈쿠리 전통 흙벽 창고 거리를 걸으며 가와고에 상징 종루 인증샷 (정오 12:00 타종 소리 감상 가능)
+ </div>
+ </div>
+
+ <!-- 3. 가와고에 장어 점심 & 디저트 -->
+ <div class="timeline-card highlight-amber">
+ <div class="tl-top">
+ <span class="tl-time">12:00 ~ 14:30</span>
+ <span class="badge badge-amber">장어덮밥 & 고구마/푸딩</span>
+ </div>
+ <div class="tl-route">점심(장어덮밥) → 디저트(고구마 & 푸딩) → 다이쇼로만유메도리</div>
+ <div class="tl-desc">가와고에 대표 명물 우나쥬 식사 후 달콤한 디저트와 레트로 거리 산책</div>
+ <div class="tl-note">
+ • <strong>점심 장어덮밥 추천 (3곳 중 택 1):</strong><br>
+ 1) <strong>오가기쿠 (小川菊):</strong> 1807년 창업 최고 노포. <em>※ 팁: 오전 10시경 미리 매장 앞 키오스크에서 번호표(정리권)를 뽑아두면 12시쯤 대기 없이 입장 가능!</em><br>
+ 2) <strong>가와고에 이치노야 (いちのや):</strong> 1832년 창업, 좌석이 넓고 쾌적하며 쪄서 구워낸 부드러운 장어가 일품<br>
+ 3) <strong>하야시야 (林屋):</strong> 나카인(中院) 인근의 고급스럽고 정갈한 장어 명가 (히츠마부시 스타일 인기)<br><br>
+ • <strong>가와고에 디저트 투어 (고구마 & 푸딩):</strong><br>
+ - <strong>코에도 오사츠안(小江戸おさつ庵):</strong> 얼굴보다 큰 바삭한 고구마 칩 + 소금버터 딥소스<br>
+ - <strong>카쇼 우몬(菓匠右門):</strong> 갓 쪄낸 따뜻한 고구마 찹쌀 만주 '이모코이'<br>
+ - <strong>가와고에 푸딩(川越プリン):</strong> 고구마 몽블랑이 올라간 진한 커스터드 고구마 푸딩<br><br>
+ • <strong>다이쇼 로만 유메도리(大正浪漫夢通り):</strong> 다이쇼 시대 근대 양옥 건물이 늘어선 고풍스러운 보행자 거리 산책 (잉어 깃발 장식 포토존)
+ </div>
+ </div>
+
+ <!-- 4. 오후 가와고에 카페/기모노 or 힐링 -> 이케부쿠로 복귀 -->
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">14:30 ~ 17:00</span>
+ </div>
+ <div class="tl-route">히카와 신사 산책 & 카페 휴식 → 이케부쿠로 복귀</div>
+ <div class="tl-desc">저녁 전까지 가와고에 여유롭게 둘러본 뒤 도부 도조선 타고 이케부쿠로 귀환</div>
+ <div class="tl-note">
+ • 도보 10~15분 거리의 <strong>가와고에 히카와 신사</strong>(도미 낚시 운세 뽑기) 방문 또는 <strong>스타벅스 카네츠키도리점</strong>(정원 콘셉트 매장)에서 티타임<br>
+ • 16:20경 혼카와고에역 또는 가와고에역에서 도부 도조선 급행 탑승 → <strong>17:00경 이케부쿠로역 도착</strong>
+ </div>
+ </div>
+
+ <!-- 5. 이케부쿠로 파르코 & 세이부 백화점 집중 쇼핑 -->
+ <div class="timeline-card highlight-purple">
+ <div class="tl-top">
+ <span class="tl-time">17:00 ~ 20:30</span>
+ <span class="badge badge-purple">면세 집중 쇼핑</span>
+ </div>
+ <div class="tl-route">이케부쿠로 파르코(PARCO) & 세이부(SEIBU) 백화점 쇼핑</div>
+ <div class="tl-desc">동쪽 출구와 직결된 두 백화점에서 원하시는 브랜드 한 번에 쇼핑 (여권 지참 필수!)</div>
+ <div class="tl-note">
+ • <strong>1) 이케부쿠로 PARCO 본관 (영업 ~21:00):</strong><br>
+ - <strong>7F 치이카와 레스토랑 & 굿즈샵:</strong> 기념품 및 한정 굿즈 쇼핑<br>
+ - <strong>무인양품(MUJI) / 몽벨(mont-bell) 인근 매장:</strong> 파르코 및 인접 빌딩(이케부쿠로 로프트/빅카메라 방면)에서 의류·아웃도어 쇼핑<br>
+ - <strong>아식스(ASICS):</strong> 스포츠웨어 및 러닝화/스니커즈 코너<br><br>
+ • <strong>2) 세이부 이케부쿠로 본점 & 인접 쇼핑몰 (영업 ~20:00/21:00):</strong><br>
+ - <strong>SHIRO (시로 향수):</strong> 세이부 본점 1층/2층 뷰티 플로어 (사봉, 화이트릴리, 얼그레이 오드퍼퓸 및 헤어미스트 인기)<br>
+ - <strong>유니클로(UNIQLO) & GU:</strong> 이케부쿠로 동쪽 출구 도보 2분 <strong>'이케부쿠로 동쪽 출구점(플래그십)'</strong> 또는 선샤인60 거리 대형 매장에서 면세 일괄 결제(¥5,500 이상 시 10% 면세)<br>
+ - <em>※ 팁: 백화점 마감 시간(20:00~21:00) 전 면세 카운터(Tax-Free) 대기 줄을 감안해 20:00 전후 결제 완료 추천!</em>
+ </div>
+ </div>
+
+ <!-- 6. 저녁 식사 및 숙소 복귀 -->
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">20:30 ~ 22:00</span>
+ <span class="badge badge-green">이케부쿠로 석식</span>
+ </div>
+ <div class="tl-route">이케부쿠로 저녁 식사 → 숙소 복귀</div>
+ <div class="tl-desc">쇼핑 짐 정리 후 숙소 인근 로컬 맛집에서 든든한 저녁 식사</div>
+ <div class="tl-note">
+ • <strong>추천 저녁 메뉴:</strong><br>
+ - <strong>무테키야(無敵家):</strong> 이케부쿠로 대표 진한 차슈 돈코츠 라멘 (동쪽 출구 도보 3분)<br>
+ - <strong>토마치 / 돈카츠 다이키:</strong> 두툼한 일본식 로스카츠·히레카츠 정식<br>
+ - <strong>규카츠 모토무라 이케부쿠로점:</strong> 개인 화로에 구워 먹는 소고기 규카츠<br>
+ • 식사 후 이케부쿠로 에어비앤비 숙소 복귀 및 휴식
+ </div>
+ </div>
+ </div>
+ <button class="bottom-home-btn" onclick="showView('schedule')">🏠 일정 목록으로 돌아가기</button>
+ </section>
+
+ <!-- ==================== [3일차 상세 화면] ==================== -->
+ <section id="view-day3" class="view-section">
+ <div class="detail-header">
+ <span class="d-date">DAY 3 • 12/01 (화)</span>
+ <h2>도쿄 디즈니랜드 종일 · 복귀 후 야식</h2>
+ <p>오전 이동부터 크리스마스 퍼레이드, 불꽃놀이, 이케부쿠로 야식 코스까지</p>
+ </div>
+
+ <div class="section-label">🕒 시간별 상세 동선</div>
+ <div class="timeline-list">
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">07:15 ~ 08:30</span>
+ <span class="badge badge-blue">오픈런 이동</span>
+ </div>
+ <div class="tl-route">이케부쿠로역 → 마이하마역(도쿄 디즈니랜드)</div>
+ <div class="tl-desc">개장 시간(09:00, 조기 개장 08:30 전후)에 맞춰 여유 있게 도착 (약 55분 소요)</div>
+ <div class="tl-note">
+ • <strong>이동 루트:</strong> 이케부쿠로역 → <strong>도쿄메트로 유라쿠초선</strong> 탑승(37분) → 신키바(新木場)역 하차 → <strong>JR 게이요선</strong> 환승(6분) → 마이하마(舞浜)역 도착<br>
+ • 마이하마역 남쪽 출구에서 도보 5분 이동 후 보안검색 및 입장 대기
+ </div>
+ </div>
+
+ <div class="timeline-card highlight-pink">
+ <div class="tl-top">
+ <span class="tl-time">08:45 ~ 14:00</span>
+ <span class="badge badge-red">E-티켓 & 앱 활용</span>
+ </div>
+ <div class="tl-route">파크 입장 → 인기 어트랙션 공략 & 점심 식사</div>
+ <div class="tl-desc">입장 게이트 통과 즉시 공식 앱(Tokyo Disney Resort App)으로 패스 확보</div>
+ <div class="tl-note">
+ • <strong>입장 직후 할 일:</strong><br>
+ 1) <strong>DPA(유료 우선탑승권) 구매:</strong> '미녀와 야수 마법의 이야기' 또는 '베이맥스의 해피 라이드' 추천<br>
+ 2) <strong>40주년 프라이어리티 패스(무료):</strong> '빅 썬더 마운틴', '헌티드 맨션(홀리데이 나이트메어 시즌 버전!)', '푸의 허니 헌트' 중 선점<br>
+ • <strong>점심 식사:</strong> 모바일 오더(Disney Mobile Order) 기능을 활용해 줄 서지 않고 '퀸 오브 하트 연회 홀' 또는 '플라자 파빌리온'에서 식사
+ </div>
+ </div>
+
+ <div class="timeline-card highlight-amber">
+ <div class="tl-top">
+ <span class="tl-time">14:00 ~ 21:00</span>
+ <span class="badge badge-amber">크리스마스 시즌</span>
+ </div>
+ <div class="tl-route">디즈니 크리스마스 퍼레이드 · 야간 라이트업 · 불꽃놀이</div>
+ <div class="tl-desc">12월 한정 크리스마스 장식과 퍼레이드, 신데렐라 성 프로젝션 쇼 감상</div>
+ <div class="tl-note">
+ • <strong>낮 퍼레이드:</strong> '디즈니 크리스마스 스토리' (퍼레이드 시작 30~40분 전 돗자리 자리 잡기)<br>
+ • <strong>간식 타임:</strong> 미키 츄러스(크리스마스 시즌 맛), 훈제 터키 레그, 알린 모찌<br>
+ • <strong>야간 하이라이트:</strong> '도쿄 디즈니랜드 일렉트리컬 퍼레이드 드림라이츠' → 20:30경 밤하늘 불꽃놀이 '스카이 풀 오브 컬러스' 관람 후 퇴장
+ </div>
+ </div>
+
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">21:15 ~ 23:30</span>
+ <span class="badge badge-purple">복귀 후 야식</span>
+ </div>
+ <div class="tl-route">마이하마역 → 이케부쿠로 복귀 & 심야 야식 타임</div>
+ <div class="tl-desc">22:15경 이케부쿠로 도착 후 피로를 풀어줄 야식 한잔 또는 포장</div>
+ <div class="tl-note">
+ • <strong>이케부쿠로 야식 추천 3선:</strong><br>
+ 1) <strong>토리키조쿠(鳥貴族) 이케부쿠로점:</strong> 전 메뉴 균일가 야키토리(닭꼬치) & 생맥주/하이볼 이자카야 (새벽까지 영업)<br>
+ 2) <strong>이치란 라멘 이케부쿠로점:</strong> 24시간 영업, 독서실 좌석에서 즐기는 얼큰한 돈코츠 라멘<br>
+ 3) <strong>편의점 & 백화점 마감 할인 스시/가라아게 털기:</strong> 숙소에서 편하게 맥주와 함께 마무리
+ </div>
+ </div>
+ </div>
+ <button class="bottom-home-btn" onclick="showView('schedule')">🏠 일정 목록으로 돌아가기</button>
+ </section>
+
+ <!-- ==================== [4일차 상세 화면] ==================== -->
+ <section id="view-day4" class="view-section">
+ <div class="detail-header">
+ <span class="d-date">DAY 4 • 12/02 (수)</span>
+ <h2>도쿄역 · 긴자 · 롯폰기힐즈 & 크리스마스 일루미네이션</h2>
+ <p>도쿄역 캐릭터스트리트, 긴자 플래그십 쇼핑, 해리포터·케야키자카 일루미네이션 완벽 투어</p>
+ </div>
+
+ <div class="section-label">🕒 시간별 상세 동선</div>
+ <div class="timeline-list">
+ <!-- 1. 도쿄역 -->
+ <div class="timeline-card highlight-pink">
+ <div class="tl-top">
+ <span class="tl-time">10:30 ~ 13:30</span>
+ <span class="badge badge-pink">치이카와 랜드 & 미식</span>
+ </div>
+ <div class="tl-route">이케부쿠로 → 도쿄역 (캐릭터 스트리트 & 점심)</div>
+ <div class="tl-desc">도쿄메트로 마루노우치선 직통 탑승 (이케부쿠로 → 도쿄역 약 16분 소요)</div>
+ <div class="tl-note">
+ • <strong>도쿄역 1번가 '도쿄 캐릭터 스트리트':</strong> 야에스 북쪽 출구 지하 직결. <strong>치이카와 랜드 도쿄역점</strong>에서 역장 모자 쓴 한정 굿즈 쇼핑<br>
+ • <strong>도쿄역 점심 추천:</strong><br>
+ - <strong>츠지한(つじ半) 니혼바시 본점:</strong> 도쿄 1등 해산물 카이센동 (도보 5분)<br>
+ - <strong>도쿄 라멘 스트리트:</strong> 도쿄역 지하 1층 유명 라멘 8개 명점 집결 (로쿠린샤 츠케멘 등)<br>
+ • <strong>KITTE 마루노우치 6층 옥상정원:</strong> 붉은 벽돌 도쿄역 마루노우치 역사를 한눈에 내려다보는 무료 전망 포토존
+ </div>
+ </div>
+
+ <!-- 2. 마루노우치 & 긴자 -->
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">13:30 ~ 16:45</span>
+ <span class="badge badge-amber">긴자 쇼핑 & 디저트</span>
+ </div>
+ <div class="tl-route">마루노우치 나카도리 → 긴자(Ginza) 거리 구경</div>
+ <div class="tl-desc">도쿄역 마루노우치 출구에서 가로수길을 따라 도보 12~15분이면 긴자 중심부 도착!</div>
+ <div class="tl-note">
+ • <strong>마루노우치 브릭 스퀘어 & 나카도리:</strong> 유럽풍 벽돌 정원 산책 및 <strong>에쉬레(ÉCHIRÉ)</strong> 버터 휘낭시에·크루아상 간식<br>
+ • <strong>긴자 핵심 스팟:</strong><br>
+ - <strong>긴자 식스 (GINZA SIX):</strong> 하이엔드 쇼핑몰 & 옥상 루프탑 정원 산책<br>
+ - <strong>유니클로 긴자 플래그십 스토어 (12층):</strong> 세계 최대 규모 유니클로, 층별 테마 전시 및 맞춤 자수 서비스<br>
+ - <strong>이토야(Itoya) 문구점:</strong> 12층 규모의 감각적인 일본 문구·다이어리·기프트 백화점<br>
+ - <strong>미츠코시 긴자:</strong> 지하 데파치카 디저트 구경 및 9층 테라스 가든 휴식
+ </div>
+ </div>
+
+ <!-- 3. 긴자 & 히비야 크리스마스 일루미네이션 (17:00 점등) -->
+ <div class="timeline-card highlight-blue">
+ <div class="tl-top">
+ <span class="tl-time">16:45 ~ 18:15</span>
+ <span class="badge badge-blue">🎄 일루미네이션 1부</span>
+ </div>
+ <div class="tl-route">긴자 · 도쿄 미드타운 히비야 · 마루노우치 일루미네이션</div>
+ <div class="tl-desc">17:00 정각 일제히 불이 켜지는 도쿄역~긴자 일대 크리스마스 라이트업 감상</div>
+ <div class="tl-note">
+ • <strong>① 긴자 거리 크리스마스 디스플레이:</strong> 긴자 미츠코시, 와코(WAKO) 시계탑, <strong>불가리·까르띠에·미키모토</strong> 외벽의 화려한 주얼리 크리스마스 파사드 조명<br>
+ • <strong>② 도쿄 미드타운 히비야 (긴자 도보 5분):</strong> <em>'HIBIYA Magic Time Illumination'</em> — 히비야 스텝 광장의 초대형 크리스마스 트리와 음악·조명 쇼<br>
+ • <strong>③ 마루노우치 일루미네이션 (인접):</strong> 약 1.2km 가로수길 샴페인 골드 LED 물결 및 마루빌딩 <strong>해리포터 스노우트리</strong> (동선에 맞춰 히비야 또는 마루노우치 중 선택/연계 관람)
+ </div>
+ </div>
+
+ <!-- 4. 롯폰기 힐즈 & 케야키자카 일루미네이션 -->
+ <div class="timeline-card highlight-blue">
+ <div class="tl-top">
+ <span class="tl-time">18:30 ~ 21:30</span>
+ <span class="badge badge-blue">🎄 일루미네이션 2부</span>
+ </div>
+ <div class="tl-route">히비야역 → 롯폰기 힐즈 · 케야키자카 · 크리스마스 마켓</div>
+ <div class="tl-desc">도쿄메트로 히비야선 탑승 (히비야역 → 롯폰기역 직통 9분)</div>
+ <div class="tl-note">
+ • <strong>① 롯폰기 힐즈 케야키자카 일루미네이션 (17:00~23:00):</strong><br>
+ 약 97만 개의 은백색·푸른빛 LED 가로수길 정면 너머로 <strong>오렌지빛 도쿄타워</strong>가 완벽하게 겹치는 도쿄 최고의 크리스마스 포토존! (케야키자카 육교 위가 핵심 명당)<br>
+ • <strong>② 롯폰기 힐즈 크리스마스 마켓 (오오야네 플라자):</strong><br>
+ 독일 슈투트가르트 마켓을 재현한 오두막 상점에서 크리스마스 오너먼트, 스노우볼 구경 및 따뜻한 글뤼바인(뱅쇼)·소시지 간식<br>
+ • <strong>③ 모리 타워 66플라자 & 웨스트 워크 트리:</strong> 롯폰기 힐즈 단지 내 다채로운 크리스마스 트리 오브제 감상<br>
+ • <strong>④ 롯폰기 저녁 식사:</strong> 롯폰기 이마카츠(미쉐린 사사미카츠) 또는 롯폰기 힐즈 내 레스토랑에서 석식 후 오에도선/야마노테선 환승해 이케부쿠로 복귀
+ </div>
+ </div>
+ </div>
+ <button class="bottom-home-btn" onclick="showView('schedule')">🏠 일정 목록으로 돌아가기</button>
+ </section>
+
+ <!-- ==================== [5일차 상세 화면] ==================== -->
+ <section id="view-day5" class="view-section">
+ <div class="detail-header">
+ <span class="d-date">DAY 5 • 12/03 (목)</span>
+ <h2>치이카와 파크(11:00) · 아사쿠사 이동 & 온천 숙박</h2>
+ <p>이케부쿠로 체크아웃 후 치이카와 파크 관람, 도미인 아사쿠사 체크인 및 센소지 야경</p>
+ </div>
+
+ <div class="section-label">🕒 시간별 상세 동선</div>
+ <div class="timeline-list">
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">09:30 ~ 10:45</span>
+ <span class="badge badge-amber">체크아웃 & 짐보관</span>
+ </div>
+ <div class="tl-route">이케부쿠로 에어비앤비 체크아웃(10:00) → 코인락커 보관</div>
+ <div class="tl-desc">아사쿠사로 넘어가기 전, 오전 치이카와 파크 관람을 위해 캐리어 임시 보관</div>
+ <div class="tl-note">
+ • <strong>10:00 이전 체크아웃:</strong> 호스트 안내에 따라 열쇠 반납(숙소 우편함/키박스 또는 모카 라운지 반납 확인)<br>
+ • <strong>짐 보관 팁:</strong> 이케부쿠로역 동쪽 출구(선샤인60 거리 방면) 대형 코인락커 또는 선샤인시티 내 코인락커에 캐리어 보관 후 도보 이동
+ </div>
+ </div>
+
+ <div class="timeline-card highlight-pink">
+ <div class="tl-top">
+ <span class="tl-time">11:00 ~ 13:30</span>
+ <span class="badge badge-red">예약확정 (11:00)</span>
+ </div>
+ <div class="tl-route">치이카와 파크 (선샤인시티 아넥스) 관람 & 점심</div>
+ <div class="tl-desc">이번 여행의 핵심 하이라이트! 10:45까지 입장 대기 줄 도착 권장</div>
+ <div class="tl-note">
+ • <strong>위치:</strong> 이케부쿠로 선샤인시티 아넥스(Sunshine City Annex) B1F ~ 1F<br>
+ • <strong>입장 방법:</strong> 클룩(Klook) 예약 모바일 QR 바우처 및 여권 지참 후 지정 시간(11:00) 입장<br>
+ • <strong>즐길 거리:</strong> 치이카와 작중 명장면 포토존, 체험형 어트랙션, 파크 한정 퓨와코로 마스코트·굿즈 쇼핑<br>
+ • 관람 후 선샤인시티 전문식당가(알파 3F 등) 또는 이케부쿠로 역세권에서 점심 식사
+ </div>
+ </div>
+
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">14:00 ~ 15:30</span>
+ <span class="badge badge-green">호텔 이동 & 체크인</span>
+ </div>
+ <div class="tl-route">이케부쿠로 → 아사쿠사 이동 & 도미인 익스프레스 체크인</div>
+ <div class="tl-desc">이케부쿠로 락커에서 캐리어 회수 후 아사쿠사 숙소로 이동 (약 35분 소요)</div>
+ <div class="tl-note">
+ • <strong>추천 교통편:</strong> 이케부쿠로역 → <strong>JR 야마노테선</strong> 탑승(16분) → 우에노(上野)역 하차 → <strong>도쿄메트로 긴자선</strong> 환승(5분) → 아사쿠사역(4번·5번 출구) 하차 후 도보 1분!<br>
+ • <strong>15:00 체크인:</strong> <strong>도미인 익스프레스 아사쿠사(Dormy Inn Express Asakusa)</strong><br>
+ - 스미다가와 강과 도쿄 스카이트리가 보이는 리버 사이드뷰 객실 짐 풀기<br>
+ - 10층 전망 족욕탕 및 천연온천 대욕장/사우나에서 4일간의 여행 피로 풀기
+ </div>
+ </div>
+
+ <div class="timeline-card highlight-blue">
+ <div class="tl-top">
+ <span class="tl-time">16:30 ~ 21:30</span>
+ <span class="badge badge-blue">센소지 야간 라이트업</span>
+ </div>
+ <div class="tl-route">센소지 야경 산책 → 아사쿠사 저녁 식사 → 도미인 무료 야식</div>
+ <div class="tl-desc">낮보다 한적하고 웅장한 센소지의 붉은 등불 야경과 로컬 먹거리 투어</div>
+ <div class="tl-note">
+ • <strong>센소지 야경 & 스미다 공원:</strong><br>
+ - 카미나리몬, 호조몬, 오층탑에 붉은 조명이 켜지는 황홀한 야경 (경내는 24시간 개방, 라이트업 ~23:00)<br>
+ - 숙소 바로 앞 스미다 공원 강변 산책로에서 불 켜진 <strong>도쿄 스카이트리</strong> 야경 감상<br>
+ • <strong>아사쿠사 저녁 추천:</strong><br>
+ - <strong>아사쿠사 규카츠:</strong> 개인 미니 화로에 구워 먹는 바삭촉촉 규카츠<br>
+ - <strong>몬자 모헤지 아사쿠사점:</strong> 명란 치즈 몬자야키 & 오코노미야키<br>
+ - <strong>호피 거리(ホッピー通り):</strong> 정겨운 야외 포차 감성 거리에서 꼬치와 소 힘줄 조림<br>
+ • <strong>21:30 ~ 23:00 호텔 무료 서비스:</strong> 온천 후 무료 아이스크림 & 도미인 명물 <strong>요나키소바(간장 라멘)</strong> 무료 야식 즐기기
+ </div>
+ </div>
+ </div>
+ <button class="bottom-home-btn" onclick="showView('schedule')">🏠 일정 목록으로 돌아가기</button>
+ </section>
+
+ <!-- ==================== [6일차 상세 화면] ==================== -->
+ <section id="view-day6" class="view-section">
+ <div class="detail-header">
+ <span class="d-date">DAY 6 • 12/04 (금)</span>
+ <h2>아사쿠사 골목 투어 · 갓파바시 · 나리타 귀국</h2>
+ <p>마지막 날 알찬 아사쿠사 간식·그릇 쇼핑 후 공항 직통 열차로 여유로운 귀국</p>
+ </div>
+
+ <div class="section-label">🕒 시간별 상세 동선</div>
+ <div class="timeline-list">
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">09:00 ~ 11:00</span>
+ <span class="badge badge-amber">체크아웃 11:00</span>
+ </div>
+ <div class="tl-route">아침 온천 & 조식 → 호텔 체크아웃 & 프런트 짐 보관</div>
+ <div class="tl-desc">11:00 체크아웃 후 호텔 프런트에 캐리어를 무료로 맡기고 가볍게 도보 산책</div>
+ <div class="tl-note">
+ • 아침 전망 족욕탕에서 스카이트리 모닝뷰 감상 및 무료 요구르트<br>
+ • 프런트에 짐 보관증(번호표)을 받고 아사쿠사 시내 마지막 투어 출발
+ </div>
+ </div>
+
+ <div class="timeline-card highlight-amber">
+ <div class="tl-top">
+ <span class="tl-time">11:00 ~ 13:00</span>
+ <span class="badge badge-pink">나카미세 간식 투어</span>
+ </div>
+ <div class="tl-route">센소지 참배 · 나카미세도리 · 덴보인도리 · 니시산도</div>
+ <div class="tl-desc">아사쿠사의 활기찬 낮 풍경과 명물 길거리 간식·전통 골목 쇼핑</div>
+ <div class="tl-note">
+ • <strong>나카미세도리 필수 간식 3선:</strong><br>
+ 1) <strong>아사쿠사 멘치:</strong> 육즙 가득한 명품 소고기·돼지고기 멘치카츠<br>
+ 2) <strong>아사쿠사 키비당고 아즈마:</strong> 고소한 콩가루 수수경단 꼬치<br>
+ 3) <strong>화월당(花月堂) 본점:</strong> 겉바속촉 점보 메론빵 (니시산도 입구)<br>
+ • <strong>스즈키엔(壽々喜園):</strong> 농도 1~7단계 진한 말차 젤라또 디저트<br>
+ • <strong>덴보인도리(伝法院通り):</strong> 에도 시대풍 기와지붕 아래 전통 손수건, 부채, 일본 잡화 기념품 구경
+ </div>
+ </div>
+
+ <div class="timeline-card">
+ <div class="tl-top">
+ <span class="tl-time">13:00 ~ 16:15</span>
+ <span class="badge badge-blue">갓파바시 & 마지막 식사</span>
+ </div>
+ <div class="tl-route">갓파바시 도구거리 쇼핑 → 마지막 점심 & 로컬 카페</div>
+ <div class="tl-desc">센소지에서 서쪽으로 도보 7분 거리의 일본 최대 주방·그릇 거리 탐방</div>
+ <div class="tl-note">
+ • <strong>갓파바시 도구거리(かっぱ橋):</strong><br>
+ - 감각적인 일본 가정식 도자기 그릇, 젓가락, 커피 드립퍼 쇼핑<br>
+ - 실제 음식과 똑같이 만든 <strong>미니어처 음식 모형 키링·자석</strong> 기념품 가게 (마이드니, 사토 샘플 등) 구경<br>
+ • <strong>마지막 점심 추천:</strong><br>
+ - <strong>아사쿠사 요시카미:</strong> 70년 전통 레트로 경양식 (비프스튜·오므라이스)<br>
+ - <strong>아사쿠사 이마한(今半):</strong> 여행의 대미를 장식하는 프리미엄 스키야키 런치 정식<br>
+ • <strong>로컬 카페 티타임:</strong> 'Feb's coffee & scone' 또는 '킷사 텐고쿠'에서 커피 한잔 후 호텔로 복귀
+ </div>
+ </div>
+
+ <div class="timeline-card highlight-purple">
+ <div class="tl-top">
+ <span class="tl-time">16:15 ~ 20:00</span>
+ <span class="badge badge-red">귀국편 20:00 출발</span>
+ </div>
+ <div class="tl-route">도미인 짐 수령 → 아사쿠사역 → 나리타 공항 도착 & 출국</div>
+ <div class="tl-desc">아사쿠사역에서 나리타 공항까지 환승 없는 직통 열차로 편리하게 이동!</div>
+ <div class="tl-note">
+ • <strong>16:15 ~ 16:30:</strong> 도미인 익스프레스 아사쿠사 프런트에서 캐리어 회수 후 도보 2분 거리 <strong>도에이 아사쿠사선 아사쿠사역</strong> 이동<br>
+ • <strong>16:40경 열차 탑승:</strong> <strong>게이세이 액세스 특급(Access Express) '나리타 공항(成田空港)'행</strong> 직통 탑승 (환승 없이 약 55~60분 소요, 약 ¥1,370)<br>
+ - <em>※ 주의: 행선지가 '하네다공항'이나 '아오토'가 아닌 <strong>'나리타공항(成田空港)'</strong>인지 전광판 확인 후 탑승!</em><br>
+ • <strong>17:40경 나리타 공항 도착:</strong> 20:00 출발 항공편 수하물 위탁, 출국 심사 및 면세점 마지막 쇼핑 후 22:40 인천공항 귀국 완료!
+ </div>
+ </div>
+ </div>
+ <button class="bottom-home-btn" onclick="showView('schedule')">🏠 일정 목록으로 돌아가기</button>
+ </section>
+
+ <!-- ==================== [카테고리 1: 치이카와 명소 총정리] ==================== -->
+ <section id="view-chiikawa" class="view-section">
+ <div class="detail-header">
+ <span class="d-date">SPECIAL GUIDE 1</span>
+ <h2>🐹 치이카와 공식 명소 6선 총정리</h2>
+ <p>일정별 동선에 완벽하게 배치된 치이카와 투어 체크리스트</p>
+ </div>
+
+ <div class="info-cards">
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">1. 매지컬 치이카와 신주쿠 마루이점</span>
+ <span class="badge badge-pink">1일차 오후</span>
+ </div>
+ <div class="info-card-body">
+ <div><strong>위치:</strong> 신주쿠 마루이 본관 1층</div>
+ <div><strong>특징:</strong> 마법소녀 콘셉트 의상의 치이카와·하치와레·우사기·모몽가 인형 및 한정 굿즈 상설 매장.</div>
+ </div>
+ </div>
+
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">2. 치이카와 베이커리 & 하라주쿠 랜드</span>
+ <span class="badge badge-pink">1일차 늦은오후</span>
+ </div>
+ <div class="info-card-body">
+ <div><strong>위치:</strong> 도큐플라자 오모카도 3층 / 키디랜드 하라주쿠점</div>
+ <div><strong>특징:</strong> 캐릭터 모양 수제 빵과 베이커리 한정 굿즈, 그리고 도쿄 최대 물량의 하라주쿠 랜드 굿즈 쇼핑.</div>
+ </div>
+ </div>
+
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">3. 치이카와 모구모구 혼포 (가와고에점)</span>
+ <span class="badge badge-amber">2일차 09:30 오픈런</span>
+ </div>
+ <div class="info-card-body">
+ <div><strong>위치:</strong> 사이타마현 가와고에시 모토마치 2-7-9 (과자골목 인근)</div>
+ <div><strong>특징:</strong> 전국 단 두 곳뿐인 먹거리 테마 매장. 고구마·전통 과자 컬래버 가와고에 한정 인형 독점 판매.</div>
+ </div>
+ </div>
+
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">4. 치이카와 레스토랑 & 굿즈샵</span>
+ <span class="badge badge-pink">2일차 저녁</span>
+ </div>
+ <div class="info-card-body">
+ <div><strong>위치:</strong> 이케부쿠로 PARCO 본관 7층 (~21:00)</div>
+ <div><strong>특징:</strong> 패밀리 레스토랑 콘셉트 기프트숍에서 식기류·인형·문구 쇼핑.</div>
+ </div>
+ </div>
+
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">5. 치이카와 랜드 도쿄역점</span>
+ <span class="badge badge-blue">4일차 오전</span>
+ </div>
+ <div class="info-card-body">
+ <div><strong>위치:</strong> 도쿄역 1번가 지하 '도쿄 캐릭터 스트리트'</div>
+ <div><strong>특징:</strong> 역장 제복을 입은 도쿄역 한정 에디션 마스코트 및 키링 인기.</div>
+ </div>
+ </div>
+
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">6. 치이카와 파크 (ちいかわパーク)</span>
+ <span class="badge badge-red">5일차 11:00 확정</span>
+ </div>
+ <div class="info-card-body">
+ <div><strong>위치:</strong> 이케부쿠로 선샤인시티 아넥스 B1F~1F</div>
+ <div><strong>특징:</strong> 클룩 2인 예약 완료! 대형 실내 체험존, 포토존 및 파크 단독 한정 굿즈샵.</div>
+ </div>
+ </div>
+ </div>
+ <button class="bottom-home-btn" onclick="showView('schedule')">🏠 일정 목록으로 돌아가기</button>
+ </section>
+
+ <!-- ==================== [카테고리 2: 겨울 일루미네이션 명소] ==================== -->
+ <section id="view-illumination" class="view-section">
+ <div class="detail-header">
+ <span class="d-date">SPECIAL GUIDE 2</span>
+ <h2>🎄 2026 도쿄 겨울 일루미네이션 명소</h2>
+ <p>여행 기간(11/29~12/04) 중 동선별로 만나는 크리스마스 라이트업</p>
+ </div>
+
+ <div class="info-cards">
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">1. 오모테산도 힐즈 & 가로수길 조명</span>
+ <span class="badge badge-pink">1일차 저녁 동선</span>
+ </div>
+ <div class="info-card-body">
+ 오모테산도 힐즈 본관 아트리움 대계단의 크리스마스 트리와 1.1km 느티나무 가로수길 샴페인 골드 일루미네이션.
+ </div>
+ </div>
+
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">2. 마루노우치 × 해리포터 일루미네이션</span>
+ <span class="badge badge-blue">4일차 도쿄역 동선</span>
+ </div>
+ <div class="info-card-body">
+ 도쿄역 마루노우치 나카도리 일대의 샴페인 골드 LED 가로수길과 마루빌딩의 호그와트 스노우트리 연출.
+ </div>
+ </div>
+
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">3. 긴자 거리 & 도쿄 미드타운 히비야</span>
+ <span class="badge badge-blue">4일차 긴자 동선</span>
+ </div>
+ <div class="info-card-body">
+ 긴자 명품 플래그십 외벽의 크리스마스 파사드 장식과 도보 5분 거리 미드타운 히비야 스텝 광장의 초대형 크리스마스 트리 라이트업.
+ </div>
+ </div>
+
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">4. 롯폰기 힐즈 케야키자카 & 크리스마스 마켓</span>
+ <span class="badge badge-blue">4일차 하이라이트</span>
+ </div>
+ <div class="info-card-body">
+ 97만 개 은백색·청색 LED 가로수길 정면 너머로 도쿄타워가 보이는 도쿄 No.1 야경 스팟. 오오야네 플라자 독일 크리스마스 마켓 동시 개최.
+ </div>
+ </div>
+
+ <div class="info-card">
+ <div class="info-card-header">
+ <span class="info-card-title">5. 센소지 경내 & 스카이트리 라이트업</span>
+ <span class="badge badge-amber">5일차 아사쿠사 동선</span>
+ </div>
+ <div class="info-card-body">
+ 붉은 카미나리몬과 오층탑 야간 조명, 그리고 스미다 강변에서 바라보는 도쿄 스카이트리의 겨울 시즌 한정 크리스마스 컬러 라이트업.
+ </div>
+ </div>
+ </div>
+ <button class="bottom-home-btn" onclick="showView('schedule')">🏠 일정 목록으로 돌아가기</button>
+ </section>
+
+ <footer>
+ 도쿄 5박 6일 여행 플래너 v2 • 일정과 예산을 한눈에 확인하세요!
+ </footer>
 </div>
 
 <script>
-  const viewTitles = {
-    home: '🇯🇵 도쿄 5박 6일 플래너',
-    day1: '1일차 (11/29 일)',
-    day2: '2일차 (11/30 월)',
-    day3: '3일차 (12/01 화)',
-    day4: '4일차 (12/02 수)',
-    day5: '5일차 (12/03 목)',
-    day6: '6일차 (12/04 금)',
-    chiikawa: '🐹 치이카와 명소 총정리',
-    illumination: '🎄 겨울 일루미네이션 10선'
-  };
+ const viewTitles = {
+ schedule: '🇯🇵 도쿄 5박 6일 플래너',
+ budget: '💳 금액 · 결제내역',
+ day1: '1일차 (11/29 일)',
+ day2: '2일차 (11/30 월)',
+ day3: '3일차 (12/01 화)',
+ day4: '4일차 (12/02 수)',
+ day5: '5일차 (12/03 목)',
+ day6: '6일차 (12/04 금)',
+ chiikawa: '🐹 치이카와 명소 6선',
+ illumination: '🎄 겨울 일루미네이션'
+ };
 
-  // UI만 업데이트하는 순수 함수
-  function showView(viewId) {
-    document.querySelectorAll('.view-section').forEach(section => {
-      section.classList.remove('active');
-    });
+ let currentMainTab = 'schedule';
 
-    const target = document.getElementById('view-' + viewId) || document.getElementById('view-home');
-    target.classList.add('active');
+ function switchMainTab(tabName) {
+ currentMainTab = tabName;
+ document.getElementById('tab-schedule').classList.toggle('active', tabName === 'schedule');
+ document.getElementById('tab-budget').classList.toggle('active', tabName === 'budget');
+ showView(tabName);
+ }
 
-    const navTitle = document.getElementById('navTitle');
-    const backBtn = document.getElementById('backBtn');
-    
-    // 타이틀 변경 및 뒤로가기 버튼 숨김/표시 처리
-    navTitle.textContent = viewTitles[viewId] || viewTitles.home;
-    backBtn.style.display = (viewId === 'home' || !viewId) ? 'none' : 'inline-flex';
+ function showView(viewId, pushHistory = true) {
+ document.querySelectorAll('.view-section').forEach(section => {
+ section.classList.remove('active');
+ });
 
-    window.scrollTo(0, 0);
-  }
+ const target = document.getElementById('view-' + viewId);
+ if (target) {
+ target.classList.add('active');
+ }
 
-  // 사용자가 a 태그를 클릭하여 주소(#해시)가 바뀔 때마다 무조건 실행
-  window.addEventListener('hashchange', function() {
-    const hash = window.location.hash.replace('#', '');
-    showView(hash || 'home');
-  });
+ const navTitle = document.getElementById('navTitle');
+ const backBtn = document.getElementById('backBtn');
+ const mainTabs = document.getElementById('mainTabs');
 
-  // 처음 파일을 열었을 때 주소 상태 확인
-  window.addEventListener('DOMContentLoaded', function() {
-    const initialHash = window.location.hash.replace('#', '');
-    showView(initialHash || 'home');
-  });
+ const isMainView = (viewId === 'schedule' || viewId === 'budget');
+ navTitle.textContent = viewTitles[viewId] || viewTitles.schedule;
+ backBtn.style.display = isMainView ? 'none' : 'inline-flex';
+ mainTabs.style.display = isMainView ? 'grid' : 'none';
+
+ if (isMainView) {
+ currentMainTab = viewId;
+ document.getElementById('tab-schedule').classList.toggle('active', viewId === 'schedule');
+ document.getElementById('tab-budget').classList.toggle('active', viewId === 'budget');
+ }
+
+ window.scrollTo({ top: 0, behavior: 'smooth' });
+
+ if (pushHistory) {
+ history.pushState({ viewId: viewId }, '', '#' + viewId);
+ }
+ }
+
+ window.addEventListener('popstate', function(event) {
+ if (event.state && event.state.viewId) {
+ showView(event.state.viewId, false);
+ } else {
+ showView('schedule', false);
+ }
+ });
 </script>
 
 </body>
